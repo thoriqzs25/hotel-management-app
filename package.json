@@ -9,7 +9,12 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "format:check": 
+   "prettier --check .",
+   "format:write": "prettier --write .",
+   "lint:check": "eslint .",
+   "lint:fix": "eslint --fix ."
   },
   "keywords": [],
   "author": {
@@ -18,7 +23,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "eslint": "^8.26.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0",
