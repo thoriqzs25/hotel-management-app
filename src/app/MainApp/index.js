@@ -1,3 +1,4 @@
+import { generateFnBInformation } from '../../content/FnBInformation/index.js';
 import { generateHotelInformation } from '../../content/HotelInformation/index.js';
 import { generateNavigationBar } from '../../nav/index.js';
 
@@ -6,7 +7,8 @@ function render() {
   generateNavigationBar();
 
   // LANDING PAGE
-  generateHotelInformation();
+  // generateHotelInformation();
+  generateFnBInformation();
 }
 
 render();

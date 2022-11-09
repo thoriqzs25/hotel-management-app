@@ -1,3 +1,4 @@
+import { generateFnBInformation } from '../content/FnBInformation/index.js';
 import { generateHotelInformation } from '../content/HotelInformation/index.js';
 
 const DATA = [
@@ -69,6 +70,8 @@ function activate(id) {
   if (id == 1) {
     console.log('were in line 60');
     generateHotelInformation();
+  } else if (id == 3) {
+    generateFnBInformation();
   } else if (id == 4) {
     console.log('line 73');
     window.nav.app('authAppRedirect');
