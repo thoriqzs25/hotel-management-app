@@ -20,7 +20,6 @@ body p {
   position: fixed;
   /* padding-left: 0 !important; */
   padding: 20px !important;
-  padding-left: 8px !important;
   height: 100vh;
 }
 
@@ -32,7 +31,6 @@ body p {
   display: flex;
   align-items: center;
   margin-bottom: 24px;
-  padding-left: 12px;
 }
 
 .nav_title {

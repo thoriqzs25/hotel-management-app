@@ -60,3 +60,7 @@ app.on('activate', () => {
 ipcMain.handle('mainAppRedirect', () => {
   openPage('/MainApp/index.html');
 });
+
+ipcMain.handle('authAppRedirect', () => {
+  openPage('/AuthApp/index.html');
+});

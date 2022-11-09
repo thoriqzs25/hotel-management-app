@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
  */
 contextBridge.exposeInMainWorld('nav', {
   app: (channel, data) => {
-    let validChannels = ['mainAppRedirect']; // list of ipcMain.handle channels you want access in frontend to
+    let validChannels = ['mainAppRedirect', 'authAppRedirect']; // list of ipcMain.handle channels you want access in frontend to
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);
     }

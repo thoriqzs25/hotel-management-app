@@ -71,6 +71,7 @@ function activate(id) {
     generateHotelInformation();
   } else if (id == 4) {
     console.log('line 73');
+    window.nav.app('authAppRedirect');
   }
 }
 

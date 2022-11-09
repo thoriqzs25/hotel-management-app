@@ -70,6 +70,19 @@ body p {
   font-size: 24px;
 }
 
-.container p:nth-child(2) {
+.margin-bottom {
   margin-bottom: 16px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  height: 1rem !important;
+  border-bottom: none !important;
+  font-size: 12px !important;
+  margin: 0px !important;
+  padding: 0px !important;
 }
