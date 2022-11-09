@@ -1,4 +1,4 @@
-import { generateHotelInformation } from '../HotelInformation/index.js';
+import { generateHotelInformation } from '../content/HotelInformation/index.js';
 
 const DATA = [
   {

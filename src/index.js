@@ -19,8 +19,8 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  // mainWindow.loadFile(path.join(__dirname, './MainApp/index.html'));
-  mainWindow.loadFile(path.join(__dirname, './AuthApp/index.html'));
+  // mainWindow.loadFile(path.join(__dirname, './app/MainApp/index.html'));
+  mainWindow.loadFile(path.join(__dirname, './app/AuthApp/index.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -58,9 +58,9 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle('mainAppRedirect', () => {
-  openPage('/MainApp/index.html');
+  openPage('/app/MainApp/index.html');
 });
 
 ipcMain.handle('authAppRedirect', () => {
-  openPage('/AuthApp/index.html');
+  openPage('/app/AuthApp/index.html');
 });
