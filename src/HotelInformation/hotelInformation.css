@@ -1,0 +1,15 @@
+#title {
+  margin-bottom: 4px;
+}
+
+#hotel_information .text_field {
+  border-radius: 8px;
+  padding: 4px;
+  padding-left: 16px;
+}
+
+#hotel_information {
+  margin-bottom: 14px;
+  padding-left: 16px;
+  padding-right: 16px;
+}

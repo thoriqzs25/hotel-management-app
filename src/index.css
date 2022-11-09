@@ -1,7 +1,126 @@
+@import url("./HotelInformation/hotelInformation.css"); /* Using a url */
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  background-color: #FFFBFE;
+  /* max-width: 38rem; */
+  /* padding: 2rem; */
+}
+
+body p {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.sidebar_container {
+  background-color: #F7F3FA;
+  position: fixed;
+  /* padding-left: 0 !important; */
+  padding: 20px !important;
+  padding-left: 8px !important;
+  height: 100vh;
+}
+
+.header p {
+  margin-left: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-left: 12px;
+}
+
+.nav_title {
+  margin-bottom: 16px;
+  padding-left: 12px;
+  /* background-color: violet; */
+}
+
+.nav_item p {
+  margin-left: 16px;
+}
+
+.nav_item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  padding-left: 20px;
+  border-radius: 24px;
+  margin-bottom: 8px;
+}
+
+.nav_item:hover {
+  cursor: pointer;
+  background-color: #E8DEF8;
+}
+
+.spacer {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #79747E;
+}
+
+#content {
+  padding-top: 68px;
+}
+
+.content_detail {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding: 12px;
+  width: 75%;
+  position: fixed;
+  background-color: white;
+  top: 0px;
+}
+
+.default-padding {
+  padding: 0px !important;
+}
+
+.button {
+  border-radius: 20px;
+}
+
+.purple {
+  background-color: #6750A4 !important;
+}
+
+.btn-white {
+  background-color: #FFFBFE;
+  color: #6750A4;
+  border: 1px solid #79747E;
+}
+
+.normal-text {
+  text-transform: none;
+}
+  
+#button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 16px;
+}
+
+.modal {
+  border-radius: 12px;
+}
+
+.modal-content h4 {
+  text-align: center;
+}
+
+.modal-content {
+  padding-bottom: 0px !important;
+}
+
+.modal-footer {
+  padding: 0px 40px !important;
 }

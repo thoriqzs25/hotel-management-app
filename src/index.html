@@ -2,11 +2,74 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Font awesome api -->
+    <script src="https://kit.fontawesome.com/b5a95971eb.js" crossorigin="anonymous"></script>
+
     <title>Hello World!</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <div class="row">
+      <div class="col s3 sidebar_container">
+        <div class="header">
+          <i class="small material-icons">business</i>
+          <p>MEKITZI</p>
+        </div>
+        <div id="nav" class="nav">
+          <!-- 
+            NAV ITEMS
+          -->
+        </div>
+      </div>
+      <div class="col s9 offset-s3 default-padding">
+        <div>
+          <div class="content_detail z-depth-1">
+            <i class="small material-icons">menu</i>
+            <p>Update Hotel Information</p>
+            <i class="small material-icons">account_circle</i>
+          </div>
+          <div id="content">
+            <!-- 
+              CONTENTS  
+            -->
+          </div>
+
+          <!-- Modal Trigger -->
+          <div id="button">
+            <a class="waves-effect waves-light btn modal-trigger button purple normal-text" href="#modal1">Update Information</a>
+            
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal">
+              <div class="modal-content">
+                <h4>Update Information</h4>
+                <div id="modal-field"></div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect btn button normal-text btn-white" style="margin-right: 20px;">Cancel</a>
+                <a href="#!" class="modal-close waves-effect btn button normal-text purple">Confirm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script type="module" src="./Contents/index.js"></script>
   </body>
 </html>
+<!DOCTYPE html>
