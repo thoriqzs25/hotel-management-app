@@ -1,7 +1,9 @@
+import { generateHotelInformation } from '../HotelInformation/index.js';
+
 const DATA = [
   {
     title: 'Order',
-    item: ['Overview', 'Test'],
+    item: ['Overview'],
   },
   {
     title: 'Services',
@@ -13,9 +15,13 @@ const DATA = [
   },
 ];
 
+let numOfNav;
+
 export function generateNavigationBar() {
   const nav = document.getElementById('nav');
-  let realId = -1;
+  // const activeNav = document.getElementsByClassName('active');
+  // console.log('line 19', activeNav);
+  let realId = 0;
 
   DATA.forEach((res, idx) => {
     let subItem = '';
@@ -38,26 +44,38 @@ export function generateNavigationBar() {
     nav.innerHTML += content;
   });
 
-  for (let i = 0; i < 5; i++) {
-    navigate(i);
+  numOfNav = realId;
+
+  console.log('line 49', numOfNav);
+  for (let i = 1; i <= numOfNav; i++) {
+    console.log();
+    setToClickable(i);
   }
 }
 
-function navigate(id) {
+function setToClickable(id) {
   document.getElementById(`nav_${id}`).addEventListener('click', function () {
-    activate(id);
     console.log('line 47', 'nav_' + id);
+    activate(id);
   });
 }
 
 function activate(id) {
   deactivateAll();
   const nav = document.getElementById(`nav_${id}`);
+  const contentItem = document.getElementById('content');
   nav.classList.add('active');
+  contentItem.innerHTML = '';
+  if (id == 1) {
+    console.log('were in line 60');
+    generateHotelInformation();
+  } else if (id == 4) {
+    console.log('line 73');
+  }
 }
 
 function deactivateAll() {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i <= numOfNav; i++) {
     const nav = document.getElementById(`nav_${i}`);
     nav.classList.remove('active');
   }

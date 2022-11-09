@@ -33,8 +33,10 @@ export function generateHotelInformation() {
   const contentItem = document.getElementById('content');
   const modalItem = document.getElementById('modal-field');
 
+  let content = '';
+
   DATA.forEach((res, idx) => {
-    const content = `
+    const field = `
       <div id="hotel_information">
         <p id="title">${res.title}</p>
         <div class="text_field z-depth-1">
@@ -42,10 +44,10 @@ export function generateHotelInformation() {
         </div>
       </div>
     `;
-
-    contentItem.innerHTML += content;
-    modalItem.innerHTML += content;
+    content += field;
   });
+  modalItem.innerHTML = content;
+  contentItem.innerHTML = content;
 
   // MODAL TRIGGER
   document.addEventListener('DOMContentLoaded', function () {
