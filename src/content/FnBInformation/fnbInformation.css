@@ -3,6 +3,25 @@
     border-radius: 8px;
 }
 
+#fnb-image {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+#fnb-image img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.fnb-name {
+    font-weight: bold;
+}
+
 .grid-container {
     display: grid;
     justify-items: center;
@@ -11,7 +30,9 @@
 
 .Available {
     color: #2ECC3E;
-
+    width: 50%;
+    display: inline;
+    align-self: flex-end;
 }
 
 .line-through {
@@ -20,15 +41,26 @@
 
 .Not {
     color: #B3261E !important;
+    width: 50%;
+    align-self: flex-end;
 }
 
 .card-content {
     display: flex;
-    height: 120px;
+    width: auto;
+    height: auto;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .card-content, .fnb-name {
+    padding: 12px !important;
+}
+
+.card-bottom {
+    display: flex;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 12px !important;
 }
