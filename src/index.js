@@ -19,8 +19,8 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  // mainWindow.loadFile(path.join(__dirname, './app/MainApp/index.html'));
-  mainWindow.loadFile(path.join(__dirname, './app/AuthApp/index.html'));
+  mainWindow.loadFile(path.join(__dirname, './app/MainApp/index.html'));
+  // mainWindow.loadFile(path.join(__dirname, './app/AuthApp/index.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

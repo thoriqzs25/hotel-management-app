@@ -38,6 +38,7 @@ body p {
   border-radius: 8px;
   padding: 4px;
   padding-left: 16px;
+  padding-right: 16px;
 }
 
 .field {
