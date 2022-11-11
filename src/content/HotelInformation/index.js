@@ -1,3 +1,5 @@
+import { getHotel } from '../../services/api.js';
+
 const DATA = [
   {
     title: 'Hotel Name',
@@ -36,14 +38,24 @@ const DATA = [
   },
 ];
 
-export function generateHotelInformation() {
+export async function generateHotelInformation() {
   const contentItem = document.getElementById('content');
   const modalItem = document.getElementById('modal-field');
+
+  const hotelData = await getHotel();
+  console.log('line 46', hotelData);
+
+  let hotel = [];
+
+  for (var i in hotelData) hotel.push({ title: i, item: hotelData[i], id: i });
+
+  console.log('line 53', hotel);
 
   let content = '';
   let modal = '';
 
-  DATA.forEach((res, idx) => {
+  hotel.forEach((res, idx) => {
+    console.log('line 58', res);
     const field = `
       <div id="hotel_information">
         <p id="title">${res.title}</p>

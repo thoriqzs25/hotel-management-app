@@ -46,7 +46,6 @@ export function generateNavigationBar() {
 
   numOfNav = realId;
 
-  console.log('line 49', numOfNav);
   for (let i = 1; i <= numOfNav; i++) {
     console.log();
     setToClickable(i);
