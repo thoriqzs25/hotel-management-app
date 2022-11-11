@@ -1,4 +1,4 @@
-import { getHotel } from '../../services/api.js';
+import { getHotel, postHotel } from '../../services/api.js';
 
 let DATA = [
   {
@@ -85,8 +85,14 @@ export async function generateHotelInformation() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
 
-    document.getElementById('button').addEventListener('click', function () {
+    document.getElementById('modal-btn').addEventListener('click', function () {
+      console.log('line 89 clicked!');
       instances.open;
+    });
+
+    document.getElementById('confirm-btn').addEventListener('click', function () {
+      console.log('line 94 confirm!');
+      postHotel(DATA);
     });
   }
 
