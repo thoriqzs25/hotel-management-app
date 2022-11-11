@@ -1,40 +1,40 @@
 import { getHotel } from '../../services/api.js';
 
-const DATA = [
+let DATA = [
   {
     title: 'Hotel Name',
-    item: 'Test',
-    id: 'hotel_name',
+    item: 'Bandung Institute Hotel',
+    // id: 'hotel_name',
   },
   {
     title: 'Hotel Address',
-    item: 'Test',
-    id: 'hotel_address',
+    item: 'Jl. Bandung',
+    // id: 'hotel_address',
   },
   {
     title: 'Hotel Email',
-    item: 'Test',
-    id: 'hotel_email',
+    item: 'ITB@yahoo.com',
+    // id: 'hotel_email',
   },
   {
     title: 'Hotel Telephone Number',
-    item: 'Test',
-    id: 'hotel_telephone_number',
+    item: '0812345678',
+    // id: 'hotel_telephone_number',
   },
   {
     title: 'Hotel Bank Name',
-    item: 'Test',
-    id: 'hotel_bank_name',
+    item: 'Bank Bandung',
+    // id: 'hotel_bank_name',
   },
   {
     title: 'Hotel Bank Acount Name',
-    item: 'Test',
-    id: 'hotel_bank_account_name',
+    item: 'ITB_Hotel',
+    // id: 'hotel_bank_account_name',
   },
   {
     title: 'Hotel Bank Number',
-    item: 'Test',
-    id: 'hotel_bank_number',
+    item: '328912388',
+    // id: 'hotel_bank_number',
   },
 ];
 
@@ -43,19 +43,17 @@ export async function generateHotelInformation() {
   const modalItem = document.getElementById('modal-field');
 
   const hotelData = await getHotel();
-  console.log('line 46', hotelData);
 
   let hotel = [];
 
-  for (var i in hotelData) hotel.push({ title: i, item: hotelData[i], id: i });
-
-  console.log('line 53', hotel);
+  for (var i in hotelData) hotel.push({ title: i.replace('_', ' '), item: hotelData[i], id: i });
 
   let content = '';
   let modal = '';
 
-  hotel.forEach((res, idx) => {
-    console.log('line 58', res);
+  if (hotel) DATA = hotel;
+
+  DATA.forEach((res, idx) => {
     const field = `
       <div id="hotel_information">
         <p id="title">${res.title}</p>
@@ -72,7 +70,7 @@ export async function generateHotelInformation() {
     <div class="field">
       <p>${res.title}</p>
       <div class="text_field z-depth-1">
-        <input id="${res.id}" placeholder="${res.item}" type="text" class="input_field">
+        <input id="${res.id}" placeholder="${res.item}" type="text" class="input_field" value="${res.item}">
       </div>
     </div>
   `;
@@ -83,18 +81,22 @@ export async function generateHotelInformation() {
   contentItem.innerHTML = content;
 
   // MODAL TRIGGER
-  document.addEventListener('DOMContentLoaded', function () {
+  function initModal() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
 
     document.getElementById('button').addEventListener('click', function () {
       instances.open;
     });
-  });
+  }
 
-  // Or with jQuery
-
-  $(document).ready(function () {
-    $('.modal').modal();
-  });
+  if (document.readyState !== 'loading') {
+    console.log('App Ready >> Assigning modal event listener');
+    initModal();
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log('App not Ready >> Assigning DOM Content Loader Listener >> assigning modal event listeners');
+      initModal();
+    });
+  }
 }
