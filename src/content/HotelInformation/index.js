@@ -1,4 +1,4 @@
-import { getHotel, postHotel } from '../../services/api.js';
+import { getHotel, postHotel, updateHotel } from '../../services/api.js';
 
 let DATA = [
   {
@@ -46,7 +46,11 @@ export async function generateHotelInformation() {
 
   let hotel = [];
 
-  for (var i in hotelData) hotel.push({ title: i.replace('_', ' '), item: hotelData[i], id: i });
+  for (var i in hotelData) {
+    // console.log('line 49', i);
+    // console.log('line 50', i.replace(/_/g, ' '));
+    hotel.push({ title: i.replace(/_/g, ' '), item: hotelData[i], id: i });
+  }
 
   let content = '';
   let modal = '';
@@ -91,8 +95,26 @@ export async function generateHotelInformation() {
     });
 
     document.getElementById('confirm-btn').addEventListener('click', function () {
-      console.log('line 94 confirm!');
-      postHotel(DATA);
+      let name = document.getElementById('Hotel_Name');
+      let address = document.getElementById('Hotel_Address');
+      let email = document.getElementById('Hotel_Email');
+      let telephone = document.getElementById('Hotel_Telephone');
+      let bank_name = document.getElementById('Hotel_Bank_Name');
+      let bank_account_name = document.getElementById('Hotel_Bank_Account_Name');
+      let bank_number = document.getElementById('Hotel_Bank_Number');
+
+      let currInfo = {
+        Hotel_Name: name.value,
+        Hotel_Address: address.value,
+        Hotel_Email: email.value,
+        Hotel_Telephone: telephone.value,
+        Hotel_Bank_Name: bank_name.value,
+        Hotel_Bank_Account_Name: bank_account_name.value,
+        Hotel_Bank_Number: bank_number.value,
+      };
+      // postHotel(currInfo);
+      console.log('line 116', currInfo);
+      updateHotel(currInfo);
     });
   }
 

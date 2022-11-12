@@ -21,4 +21,13 @@ router.post('/', async function (req, res, next) {
   }
 });
 
+router.put('/', async function (req, res, next) {
+  try {
+    res.json(await hotel.putHotelInfo(req.body));
+  } catch (err) {
+    console.error(`Error while put hotel information`, err.message);
+    next(err);
+  }
+});
+
 module.exports = router;

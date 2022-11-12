@@ -13,13 +13,13 @@ export async function getHotel() {
 export async function postHotel(data) {
   try {
     const formData = {
-      Hotel_Name: data[0].item,
-      Hotel_Address: data[1].item,
-      Hotel_Email: data[2].item,
-      Hotel_Telephone: data[3].item,
-      Hotel_Bank_Name: data[4].item,
-      Hotel_Bank_Account_Name: data[5].item,
-      Hotel_Bank_Number: data[6].item,
+      Hotel_Name: data.Hotel_Name,
+      Hotel_Address: data.Hotel_Address,
+      Hotel_Email: data.Hotel_Email,
+      Hotel_Telephone: data.Hotel_Telephone,
+      Hotel_Bank_Name: data.Hotel_Bank_Name,
+      Hotel_Bank_Account_Name: data.Hotel_Bank_Account_Name,
+      Hotel_Bank_Number: data.Hotel_Bank_Number,
     };
 
     // console.log('line 37', formData);
@@ -33,5 +33,31 @@ export async function postHotel(data) {
     }).then((response) => response.json());
   } catch {
     alert('Error POST HOTEL');
+  }
+}
+
+export async function updateHotel(data) {
+  try {
+    const formData = {
+      Hotel_Name: data.Hotel_Name,
+      Hotel_Address: data.Hotel_Address,
+      Hotel_Email: data.Hotel_Email,
+      Hotel_Telephone: data.Hotel_Telephone,
+      Hotel_Bank_Name: data.Hotel_Bank_Name,
+      Hotel_Bank_Account_Name: data.Hotel_Bank_Account_Name,
+      Hotel_Bank_Number: data.Hotel_Bank_Number,
+    };
+
+    // console.log('line 37', formData);
+
+    return fetch('http://localhost:3000/hotel', {
+      method: 'PUT',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => response.json());
+  } catch {
+    alert('Error PUT HOTEL');
   }
 }
