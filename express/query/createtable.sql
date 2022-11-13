@@ -1,2 +1,11 @@
 -- SQLite
-CREATE TABLE general_info(Hotel_Name,Hotel_Address,Hotel_Email,Hotel_Telephone,Hotel_Bank_Name,Hotel_Bank_Account_Name,Hotel_Bank_Number);
+CREATE TABLE hotel(
+id integer PRIMARY KEY,
+name text,
+address text,
+email text,
+telephone text,
+bank_name text,
+bank_account_name text,
+bank_number text
+);

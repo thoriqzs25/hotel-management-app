@@ -12,6 +12,15 @@ router.get('/', async function (req, res, next) {
   }
 });
 
+router.get('/info', async function (req, res, next) {
+  try {
+    res.json(await hotel.checkEmptyHotel());
+  } catch (err) {
+    console.log(`Error while checking empty set hotel`, err.message);
+    next(err);
+  }
+});
+
 router.post('/', async function (req, res, next) {
   try {
     res.json(await hotel.postHotelInfo(req.body));

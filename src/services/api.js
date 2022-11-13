@@ -10,6 +10,19 @@ export async function getHotel() {
   }
 }
 
+export async function checkEmpty() {
+  try {
+    return fetch('http://localhost:3000/hotel/info').then(async (response) => {
+      let res = await response.json();
+      console.log('line 17 fetch data', res.data[0].IsEmpty);
+      return res.data[0].IsEmpty;
+    });
+  } catch {
+    console.log('Looks like there was a problem. Status Code: ' + response.status);
+    alert('Looks like there was a problem. Status Code: ' + response.status);
+  }
+}
+
 export async function postHotel(data) {
   try {
     const formData = {

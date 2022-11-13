@@ -15,6 +15,13 @@ async function getHotelInfo() {
   };
 }
 
+async function checkEmptyHotel() {
+  const data = db.query(`SELECT CASE WHEN EXISTS(SELECT 1 FROM hotel) THEN 0 ELSE 1 END AS IsEmpty`, []);
+  return {
+    data,
+  };
+}
+
 async function postHotelInfo(params) {
   const {
     Hotel_Name,
@@ -91,4 +98,5 @@ module.exports = {
   getHotelInfo,
   postHotelInfo,
   putHotelInfo,
+  checkEmptyHotel,
 };

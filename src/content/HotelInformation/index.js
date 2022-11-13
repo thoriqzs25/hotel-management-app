@@ -1,40 +1,40 @@
-import { getHotel, postHotel, updateHotel } from '../../services/api.js';
+import { checkEmpty, getHotel, postHotel, updateHotel } from '../../services/api.js';
 
 let DATA = [
   {
     title: 'Hotel Name',
-    item: 'Bandung Institute Hotel',
-    // id: 'hotel_name',
+    item: '-',
+    id: 'Hotel_Name',
   },
   {
     title: 'Hotel Address',
-    item: 'Jl. Bandung',
-    // id: 'hotel_address',
+    item: '-',
+    id: 'Hotel_Address',
   },
   {
     title: 'Hotel Email',
-    item: 'ITB@yahoo.com',
-    // id: 'hotel_email',
+    item: '-',
+    id: 'Hotel_Email',
   },
   {
-    title: 'Hotel Telephone Number',
-    item: '0812345678',
-    // id: 'hotel_telephone_number',
+    title: 'Hotel Telephone',
+    item: '-',
+    id: 'Hotel_Telephone',
   },
   {
     title: 'Hotel Bank Name',
-    item: 'Bank Bandung',
-    // id: 'hotel_bank_name',
+    item: '-',
+    id: 'Hotel_Bank_Name',
   },
   {
     title: 'Hotel Bank Acount Name',
-    item: 'ITB_Hotel',
-    // id: 'hotel_bank_account_name',
+    item: '-',
+    id: 'Hotel_Bank_Account_Name',
   },
   {
     title: 'Hotel Bank Number',
-    item: '328912388',
-    // id: 'hotel_bank_number',
+    item: '-',
+    id: 'Hotel_Bank_Number',
   },
 ];
 
@@ -46,16 +46,18 @@ export async function generateHotelInformation() {
 
   let hotel = [];
 
-  for (var i in hotelData) {
-    // console.log('line 49', i);
-    // console.log('line 50', i.replace(/_/g, ' '));
-    hotel.push({ title: i.replace(/_/g, ' '), item: hotelData[i], id: i });
+  if (hotelData) {
+    for (var i in hotelData) {
+      // console.log('line 49', i);
+      // console.log('line 50', i.replace(/_/g, ' '));
+      hotel.push({ title: i.replace(/_/g, ' '), item: hotelData[i], id: i });
+    }
   }
+
+  if (hotel.length > 0) DATA = hotel;
 
   let content = '';
   let modal = '';
-
-  if (hotel) DATA = hotel;
 
   DATA.forEach((res, idx) => {
     const field = `
@@ -74,7 +76,9 @@ export async function generateHotelInformation() {
     <div class="field">
       <p>${res.title}</p>
       <div class="text_field z-depth-1">
-        <input id="${res.id}" placeholder="${res.item}" type="text" class="input_field" value="${res.item}">
+        <input id="${res.id}" placeholder="${
+      res.item != '-' ? res.item : res.title
+    }" type="text" class="input_field" value="${res.item != '-' ? res.item : ''}">
       </div>
     </div>
   `;
@@ -89,21 +93,20 @@ export async function generateHotelInformation() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
 
+    let name = document.getElementById('Hotel_Name');
+    let address = document.getElementById('Hotel_Address');
+    let email = document.getElementById('Hotel_Email');
+    let telephone = document.getElementById('Hotel_Telephone');
+    let bank_name = document.getElementById('Hotel_Bank_Name');
+    let bank_account_name = document.getElementById('Hotel_Bank_Account_Name');
+    let bank_number = document.getElementById('Hotel_Bank_Number');
+
     document.getElementById('modal-btn').addEventListener('click', function () {
-      console.log('line 89 clicked!');
       instances.open;
     });
 
-    document.getElementById('confirm-btn').addEventListener('click', function () {
-      let name = document.getElementById('Hotel_Name');
-      let address = document.getElementById('Hotel_Address');
-      let email = document.getElementById('Hotel_Email');
-      let telephone = document.getElementById('Hotel_Telephone');
-      let bank_name = document.getElementById('Hotel_Bank_Name');
-      let bank_account_name = document.getElementById('Hotel_Bank_Account_Name');
-      let bank_number = document.getElementById('Hotel_Bank_Number');
-
-      let currInfo = {
+    document.getElementById('confirm-btn').addEventListener('click', async function () {
+      let currInput = {
         Hotel_Name: name.value,
         Hotel_Address: address.value,
         Hotel_Email: email.value,
@@ -112,9 +115,23 @@ export async function generateHotelInformation() {
         Hotel_Bank_Account_Name: bank_account_name.value,
         Hotel_Bank_Number: bank_number.value,
       };
-      // postHotel(currInfo);
-      console.log('line 116', currInfo);
-      updateHotel(currInfo);
+
+      if (
+        currInput.Hotel_Name == '' ||
+        currInput.Hotel_Address == '' ||
+        currInput.Hotel_Email == '' ||
+        currInput.Hotel_Telephone == '' ||
+        currInput.Hotel_Bank_Name == '' ||
+        currInput.Hotel_Bank_Account_Name == '' ||
+        currInput.Hotel_Bank_Number == ''
+      )
+        alert('Failed to input, form are not fully filled');
+      else {
+        let isEmpty = await checkEmpty().then((res) => res);
+        if (isEmpty) postHotel(currInput);
+        else updateHotel(currInput);
+        generateHotelInformation();
+      }
     });
   }
 
