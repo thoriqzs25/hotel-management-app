@@ -1,2 +1,2 @@
 -- SQLite
-DELETE FROM hotel WHERE hotel.id = 1;
+DELETE FROM hotel 
