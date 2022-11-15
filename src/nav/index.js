@@ -28,7 +28,7 @@ export function generateNavigationBar() {
     res.item.forEach((item, idx) => {
       realId++;
       subItem += `
-      <div class="nav_item" id="nav_${realId}">
+      <div class="nav_item ${realId == 1 ? 'active' : ''}" id="nav_${realId}">
         <i class="tiny material-icons">lens</i>
         <p>${item}</p>
       </div> 
@@ -46,9 +46,7 @@ export function generateNavigationBar() {
 
   numOfNav = realId;
 
-  console.log('line 49', numOfNav);
   for (let i = 1; i <= numOfNav; i++) {
-    console.log();
     setToClickable(i);
   }
 }
