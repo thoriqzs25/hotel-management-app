@@ -1,12 +1,18 @@
-import { generateHotelInformation } from '../../content/HotelInformation/index.js';
-import { generateNavigationBar } from '../../nav/index.js';
+import {
+  // generateHotelInformation,
+  Hotel,
+} from '../../content/HotelInformation/index.js';
+import {
+  // generateNavigationBar,
+  Nav,
+} from '../../nav/index.js';
 
 // HARUS BERURUTAN HTML NYA
-function render() {
-  generateNavigationBar();
+// function render() {
+Nav.generateNavigationBar();
 
-  // LANDING PAGE
-  generateHotelInformation();
-}
+// LANDING PAGE
+Hotel.generateHotelInformation();
+// }
 
-render();
+// render();
