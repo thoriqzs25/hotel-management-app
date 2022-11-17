@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const hotel = require('../services/hotelGeneralInfo');
+const hotel = require('../services/hotelInfo');
 
 /* GET quotes listing. */
 router.get('/', async function (req, res, next) {
@@ -16,7 +16,7 @@ router.get('/info', async function (req, res, next) {
   try {
     res.json(await hotel.checkEmptyHotel());
   } catch (err) {
-    console.log(`Error while checking empty set hotel`, err.message);
+    console.error(`Error while checking empty set hotel`, err.message);
     next(err);
   }
 });
