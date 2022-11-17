@@ -1,4 +1,5 @@
 import { Hotel } from '../content/HotelInformation/index.js';
+import { RoomInfo } from '../content/RoomInformation/index.js';
 
 const DATA = [
   {
@@ -66,6 +67,9 @@ export class Nav {
 
     if (id == 1) {
       Hotel.generateHotelInformation();
+    } else if (id == 2){
+      RoomInfo.generateRoomData();
+      console.log('line72')
     } else if (id == 4) {
       window.nav.app('authAppRedirect');
     }
