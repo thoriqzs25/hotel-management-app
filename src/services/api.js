@@ -5,8 +5,9 @@ export async function getHotel() {
       return res.data[0];
     });
   } catch {
-    console.log('Looks like there was a problem. Status Code: ' + response.status);
-    alert('Looks like there was a problem. Status Code: ' + response.status);
+    console.log('Looks like there was a problem.');
+    alert('Looks like there was a problem.');
+    return({ message: "Looks like there was a problem." })
   }
 }
 

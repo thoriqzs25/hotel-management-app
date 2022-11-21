@@ -80,6 +80,7 @@ body p {
   position: fixed;
   background-color: white;
   top: 0px;
+  z-index: 100;
 }
 
 .default-padding {
