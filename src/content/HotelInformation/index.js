@@ -1,4 +1,4 @@
-import { checkEmpty, getHotel, postHotel, updateHotel } from '../../services/api.js';
+import { HotelAPI } from '../../services/api.js';
 
 let DATA = [
   {
@@ -48,7 +48,6 @@ export class Hotel {
     let bank_account_name = document.getElementById('Hotel_Bank_Account_Name');
     let bank_number = document.getElementById('Hotel_Bank_Number');
 
-    // document.getElementById('confirm-btn').addEventListener('click', async function () {
     let currInput = {
       Hotel_Name: name.value,
       Hotel_Address: address.value,
@@ -70,12 +69,11 @@ export class Hotel {
     ) {
       alert('Failed to input, form are not fully filled');
     } else {
-      let isEmpty = await checkEmpty().then((res) => res);
-      if (isEmpty) await postHotel(currInput);
-      else await updateHotel(currInput);
+      let isEmpty = await HotelAPI.checkEmpty().then((res) => res);
+      if (isEmpty) await HotelAPI.postHotel(currInput);
+      else await HotelAPI.updateHotel(currInput);
       this.generateHotelInformation();
     }
-    // });
   }
 
   static initModal() {
@@ -105,7 +103,7 @@ export class Hotel {
     const contentItem = document.getElementById('content');
     const modalItem = document.getElementById('modal-field');
 
-    const hotelData = await getHotel();
+    const hotelData = await HotelAPI.getHotel();
 
     let hotel = [];
 
