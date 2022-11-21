@@ -1,14 +1,13 @@
-export class HotelAPI {
-  static async getHotel() {
-    try {
-      return fetch('http://localhost:3000/hotel').then(async (response) => {
-        let res = await response.json();
-        return res.data[0];
-      });
-    } catch {
-      console.log('Looks like there was a problem. Status Code: ' + response.status);
-      alert('Looks like there was a problem. Status Code: ' + response.status);
-    }
+export async function getHotel() {
+  try {
+    return fetch('http://localhost:3000/hotel').then(async (response) => {
+      let res = await response.json();
+      return res.data[0];
+    });
+  } catch {
+    console.log('Looks like there was a problem.');
+    alert('Looks like there was a problem.');
+    return({ message: "Looks like there was a problem." })
   }
 
   static async checkEmpty() {
