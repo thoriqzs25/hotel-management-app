@@ -57,11 +57,24 @@ let DATA = [
 
 export class RoomInfo {
     static async generateRoomData() {
-        const contentItem = document.getElementById('content');
+        const contentEl = document.getElementById('content');
         const modalItem = document.getElementById('modal-field');
-        contentItem.classList.add("grid-container")
+
+        var currentDropdown;
+
+        // <div class="addButton">
+        //     <a class="btn modal-trigger button purple normal-text ${btnstatus}" id="modal-btn" href="#modal1">Add Room</a>
+        // </div>
 
         let content = '';
+
+        const buttonAdd = `
+            <div style="display: flex; width: 100%; justify-content: flex-end; align-items: center; padding: 6px 25px;">
+              <a class="btn modal-trigger button purple normal-text" id="modal-btn" href="#modal1">Add room</a>
+            </div>
+        `;
+
+        // contentItem += buttonAdd;
 
         DATA.forEach((res, idx) => {
             let availability = "Available"
@@ -83,17 +96,28 @@ export class RoomInfo {
             const field = `
             <div class="card" id="rooms-information">
                 <div class="title-content">
-                    <div class="char-container">
-                        <p  class="charname">${res.char}</p>
-                    </div>
-                    <div class="title-container">
-                        <div class="rooms-name">
-                            <p>${res.type}</p>
+                    <div style="display: flex;">
+                        <div class="char-container">
+                            <p  class="charname">${res.char}</p>
                         </div>
-                        <div class="rooms-capacity">
-                            <p>${res.capacity}</p>
+                        <div class="title-container">
+                            <div class="rooms-name">
+                                <p>${res.type}</p>
+                            </div>
+                            <div class="rooms-capacity">
+                                <p>${res.capacity}</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="dot-button" dropdown="${idx}">
+                        <div class="dot">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown" id="dropdown-${idx}">
+                    <div id="dropdown-content">Edit</div>
+                    <div id="dropdown-content" style="color: red;">Delete</div>
                 </div>
                 <div class="card-image" id="rooms-image">
                     <img src="${res.specification}">
@@ -116,28 +140,86 @@ export class RoomInfo {
             content += field;
 
         });
-        contentItem.innerHTML = content;
+        const cards = `
+            <div class="grid-container">
+                ${content}
+            </div>
+        `
+
+        contentEl.innerHTML += buttonAdd + cards;
 
         let modal = '';
 
+        // modal = `
+        //     <div class="field">
+        //       <p>Name</p>
+        //       <div class="text_field z-depth-1">
+        //         <input id="name" placeholder="Nama Lengkap" type="text" class="input_field" value="">
+        //       </div>
+        //     </div>
+        //     <div class="field">
+        //       <p>Identity Number</p>
+        //       <div class="text_field z-depth-1">
+        //         <input id="idnumber" placeholder="Nomor Identitas" type="text" class="input_field" value="">
+        //       </div>
+        //     </div>
+        //   `;
+
+
         modal = `
             <div class="field">
-              <p>Name</p>
+              <p>ID Kamar</p>
               <div class="text_field z-depth-1">
-                <input id="name" placeholder="Nama Lengkap" type="text" class="input_field" value="">
+                <input id="char" placeholder="ID Kamar" type="text" class="input_field" value="">
               </div>
             </div>
             <div class="field">
-              <p>Identity Number</p>
+              <p>Tipe</p>
               <div class="text_field z-depth-1">
-                <input id="idnumber" placeholder="Nomor Identitas" type="text" class="input_field" value="">
+                <input id="type" placeholder="Tipe Kamar" type="text" class="input_field" value="">
+              </div>
+            </div>
+            <div class="field">
+              <p>Kapasitas</p>
+              <div class="text_field z-depth-1">
+                <input id="capacity" placeholder="Kapasitas Kamar" type="text" class="input_field" value="">
+              </div>
+            </div>
+            <div class="field">
+              <p>Spesifikasi</p>
+              <div class="text_field z-depth-1">
+                <input id="specification" placeholder="Spesifikasi Kamar" type="text" class="input_field" value="">
+              </div>
+            </div>
+            <div class="field">
+              <p>Harga</p>
+              <div class="text_field z-depth-1">
+                <input id="price" placeholder="Harga Kamar" type="text" class="input_field" value="">
+              </div>
+            </div>
+            <div class="field">
+              <p>Diskon</p>
+              <div class="text_field z-depth-1">
+                <input id="discount" placeholder="Diskon" type="text" class="input_field" value="">
               </div>
             </div>
           `;
 
+
         modalItem.innerHTML = modal;
 
         this.initModal();
+        document.addEventListener('click', e => {
+            if (e.target.classList.value == 'dot-button') {
+                currentDropdown = e.target.getAttribute('dropdown');
+                const dropdown = document.getElementById('dropdown-' + currentDropdown);
+                dropdown.style.display = "block";
+            }
+            if (e.target.classList.value != 'dropdown' && e.target.classList.value != 'dot-button') {
+                const dropdown = document.getElementById('dropdown-' + currentDropdown);
+                dropdown.style.display = "none";
+            }
+        })
     }
 
 
@@ -156,7 +238,6 @@ export class RoomInfo {
         document.getElementById('modal-btn').addEventListener('click', function () {
             instances.open;
 
-            console.log('line135 button click')
         });
         document.getElementById('confirm-btn').addEventListener('click', async function () {
             RoomInfo.bookRoom();
