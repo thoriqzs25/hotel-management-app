@@ -1,0 +1,2 @@
+-- SQLite
+INSERT INTO hotel (name, address, email, telephone, bank_name, bank_account_name, bank_number) VALUES ('Grand Thojor', 'Jl. Bhismna 4 no 32', 'grandoirna@yahoo.com', '081239891823', 'Bank Mandiri', 'granktjokjro', '1203921930123')
