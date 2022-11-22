@@ -1,6 +1,7 @@
 @import url("../../content/HotelInformation/hotelInformation.css"); /* Using a url */
-@import url("../../nav/nav.css"); /* Using a url */
-@import url("../../content/RoomInformation/roomInformation.css");
+@import url("../nav/nav.css"); /* Using a url */
+@import url("../../content/FnBInformation/fnbInformation.css");
+
 
 
 body {
