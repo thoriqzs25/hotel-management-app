@@ -62,6 +62,7 @@ export class Nav {
     this.deactivateAll();
     const nav = document.getElementById(`nav_${id}`);
     const contentItem = document.getElementById('content');
+    contentItem.classList.remove("grid-container")
     nav.classList.add('active');
     contentItem.innerHTML = '';
 
