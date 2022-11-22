@@ -12,6 +12,11 @@
     overflow: hidden
 }
 
+.name {
+    padding-bottom: 4px;
+    font-weight: bold;
+}
+
 #fnb-image img {
     flex-shrink: 0;
     min-width: 100%;
@@ -19,20 +24,20 @@
 }
 
 .fnb-name {
-    font-weight: bold;
+    padding: 12px 12px 8px 12px;
 }
 
 .grid-container {
     display: grid;
     justify-items: center;
-    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+    grid-template-columns: auto auto auto;
 }
 
 .Available {
     color: #2ECC3E;
     width: 50%;
     display: inline;
-    align-self: flex-end;
 }
 
 .line-through {
@@ -42,7 +47,6 @@
 .Not {
     color: #B3261E !important;
     width: 50%;
-    align-self: flex-end;
 }
 
 .card-content {
@@ -53,14 +57,16 @@
     justify-content: space-between;
 }
 
-.card-content, .fnb-name {
-    padding: 12px !important;
+.card-content {
+    padding: 12px 12px 0px 12px !important;
 }
 
 .card-bottom {
     display: flex;
     height: auto;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    padding: 12px !important;
+    padding: 0px 12px 12px 12px !important;
 }
+

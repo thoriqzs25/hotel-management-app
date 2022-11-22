@@ -1,3 +1,4 @@
+import { FnBInfo } from '../content/FnBInformation/index.js';
 import { Hotel } from '../content/HotelInformation/index.js';
 import { RoomInfo } from '../content/RoomInformation/index.js';
 
@@ -70,6 +71,8 @@ export class Nav {
     } else if (id == 2){
       RoomInfo.generateRoomData();
       console.log('line72')
+    } else if (id == 3) {
+      FnBInfo.generateFnBInformation();
     } else if (id == 4) {
       window.nav.app('authAppRedirect');
     }
