@@ -217,6 +217,7 @@ export class RoomInfo {
 
     this.initModal();
     document.addEventListener('click', (e) => {
+      console.log('click anything line 220', e);
       if (e.target.classList.value == 'dot-button') {
         currentDropdown = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + currentDropdown);

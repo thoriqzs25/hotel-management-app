@@ -1,35 +1,6 @@
 import { FnbAPI } from '../../services/fnbApi.js';
 
-let DATA = [
-  {
-    name: 'Ayam Goreng',
-    availability: true,
-    price: 12000,
-    discount: 0,
-    image: '../../public/images/1.jpg',
-  },
-  {
-    name: 'Rendang Sapi',
-    availability: true,
-    price: 12000,
-    discount: 0,
-    image: '../../public/images/2.jpg',
-  },
-  {
-    name: 'Nasi Goreng',
-    availability: true,
-    price: 20000,
-    discount: 0,
-    image: '../../public/images/3.jpg',
-  },
-  {
-    name: 'Magelangan Rendang',
-    availability: false,
-    price: 12000,
-    discount: 0,
-    image: '../../public/images/4.jpg',
-  },
-];
+let DATA;
 
 export class FnBInfo {
   static async generateFnBInformation() {
@@ -72,6 +43,15 @@ export class FnBInfo {
         <div class="card" id="fnb-information">
           <div class="fnb-name">
             <p class="name">${res.name}</p>
+            <div class="dot-button" dropdown="${res.id}">
+                <div class="dot">
+
+                </div>
+            </div>
+          </div>
+          <div class="dropdown" id="dropdown-${res.id}">
+            <div class="clickable" id="edit-${res.id}">Edit</div>
+            <div class="clickable" id="delete-${res.id}" style="color: red;">Delete</div>
           </div>
           <div class="card-image" id="fnb-image">
             <img src="${res.image}">
@@ -121,6 +101,26 @@ export class FnBInfo {
     contentItem.innerHTML = container;
 
     this.initModal();
+
+    let id;
+    document.addEventListener('click', (e) => {
+      console.log('click anything line 220', e.target);
+      if (e.target.classList.value == 'dot-button') {
+        console.log('line 109 udah masuk dan muncul edit delete');
+        id = e.target.getAttribute('dropdown');
+        const dropdown = document.getElementById('dropdown-' + id);
+        dropdown.style.display = 'block';
+      }
+      if (e.target.classList.value != 'dropdown' && e.target.classList.value != 'dot-button') {
+        const dropdown = document.getElementById('dropdown-' + id);
+        dropdown.style.display = 'none';
+      }
+      if (e.target.id.includes('delete-')) {
+        console.log('deletin line 231', id);
+        FnbAPI.deleteFnb({ id: id });
+        this.generateFnBInformation();
+      }
+    });
   }
 
   static async createFnbData() {
@@ -148,6 +148,8 @@ export class FnBInfo {
         console.log('App not Ready >> Assigning DOM Content Loader Listener >> assigning modal event listeners');
       });
     }
+
+    document.getElementById('confirm-btn').replaceWith(document.getElementById('confirm-btn').cloneNode(true));
 
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
