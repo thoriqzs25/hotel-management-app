@@ -64,9 +64,13 @@ export class Nav {
     this.deactivateAll();
     const nav = document.getElementById(`nav_${id}`);
     const contentItem = document.getElementById('content');
+    const modalButton = document.getElementById('modal-btn');
+
+    // Reset all thing to default nav
     contentItem.classList.remove('grid-container');
     nav.classList.add('active');
     contentItem.innerHTML = '';
+    modalButton.classList.remove('hidden');
 
     if (id == 1) {
       Overview.generateOverview();

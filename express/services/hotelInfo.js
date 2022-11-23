@@ -1,7 +1,7 @@
 const db = require('./db');
 
 async function getHotelInfo() {
-  const data = await db.query(
+  const data = db.query(
     `SELECT name AS Hotel_Name, address AS Hotel_Address, email AS Hotel_Email, telephone AS Hotel_Telephone, bank_name AS Hotel_Bank_Name, bank_account_name AS Hotel_Bank_Account_Name, bank_number AS Hotel_Bank_Number FROM hotel`,
     []
   );

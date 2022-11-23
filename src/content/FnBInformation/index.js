@@ -37,6 +37,12 @@ export class FnBInfo {
   static generateFnBInformation() {
     const contentItem = document.getElementById('content');
 
+    const modalButtonName = document.getElementById('modal-btn');
+    const modalTitle = document.getElementById('modal-title');
+
+    modalButtonName.innerHTML = 'Add FnB';
+    modalTitle.innerHTML = 'Add FnB';
+
     let content = '';
 
     DATA.forEach((res, idx) => {

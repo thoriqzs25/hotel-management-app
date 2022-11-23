@@ -39,6 +39,9 @@ export class Overview {
     const TABLE_HEADER = ['No', 'Description', 'Quantity', 'Price', 'Discount', 'Amount'];
 
     const contentItem = document.getElementById('content');
+    const modalButton = document.getElementById('modal-btn');
+    modalButton.classList.add('hidden');
+
     let content = '';
 
     LIST_DATA.forEach((res, idx) => {

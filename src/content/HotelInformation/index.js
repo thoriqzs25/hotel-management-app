@@ -1,4 +1,4 @@
-import { HotelAPI } from '../../services/api.js';
+import { HotelAPI } from '../../services/hotelApi.js';
 
 let DATA = [
   {
@@ -102,6 +102,11 @@ export class Hotel {
 
     const contentItem = document.getElementById('content');
     const modalItem = document.getElementById('modal-field');
+    const modalButtonName = document.getElementById('modal-btn');
+    const modalTitle = document.getElementById('modal-title');
+
+    modalButtonName.innerHTML = 'Update Information';
+    modalTitle.innerHTML = 'Update Information';
 
     const hotelData = await HotelAPI.getHotel();
 

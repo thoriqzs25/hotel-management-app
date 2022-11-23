@@ -7,7 +7,7 @@ export class HotelAPI {
       });
     } catch {
       // console.log('Looks like there was a problem');
-      return({ message: "Looks like there was a problem." });
+      return { message: 'Looks like there was a problem.' };
     }
   }
 
