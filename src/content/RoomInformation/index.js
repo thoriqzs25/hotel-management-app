@@ -1,135 +1,134 @@
 import { RoomAPI } from '../../services/roomApi.js';
 
-const ROOM_IMAGE_FOLDER = "../../../express/img/room/";
+const ROOM_IMAGE_FOLDER = '../../../express/img/room/';
 let DATA = [
-    {
-        char: 'A',
-        type: 'Regular',
-        capacity: '2 person',
-        specification: '2 Single Bed',
-        availability: true,
-        price: 300000,
-        discount: 0.1,
-    },
-    {
-        char: 'B',
-        type: 'Regular',
-        capacity: '2 person',
-        specification: 'Double bed',
-        availability: true,
-        price: 350000,
-        discount: 0.1,
-    },
-    {
-        char: 'C',
-        type: 'Deluxe',
-        capacity: '2 person',
-        specification: 'Double bed + Balcony',
-        availability: true,
-        price: 500000,
-        discount: 0.1,
-    },
-    {
-        char: 'D',
-        type: 'Superior',
-        capacity: '2 person',
-        specification: 'Queen Size Bed + Balcony + Living Room',
-        availability: true,
-        price: 750000,
-        discount: 0.1,
-    },
-    {
-        char: 'E',
-        type: 'Suite',
-        capacity: '4 person',
-        specification: '2 Queen Size Bed + Balcony + Living Room + Kitchen',
-        availability: true,
-        price: 1000000,
-        discount: 0.1,
-    },
-    {
-        char: 'F',
-        type: 'Presidental Suite',
-        capacity: '4 person',
-        specification: '2 King Size bed + Balcony + Living Room + Kitchen',
-        availability: true,
-        price: 1500000,
-        discount: 0.1,
-    },
+  {
+    char: 'A',
+    type: 'Regular',
+    capacity: '2 person',
+    specification: '2 Single Bed',
+    availability: true,
+    price: 300000,
+    discount: 0.1,
+  },
+  {
+    char: 'B',
+    type: 'Regular',
+    capacity: '2 person',
+    specification: 'Double bed',
+    availability: true,
+    price: 350000,
+    discount: 0.1,
+  },
+  {
+    char: 'C',
+    type: 'Deluxe',
+    capacity: '2 person',
+    specification: 'Double bed + Balcony',
+    availability: true,
+    price: 500000,
+    discount: 0.1,
+  },
+  {
+    char: 'D',
+    type: 'Superior',
+    capacity: '2 person',
+    specification: 'Queen Size Bed + Balcony + Living Room',
+    availability: true,
+    price: 750000,
+    discount: 0.1,
+  },
+  {
+    char: 'E',
+    type: 'Suite',
+    capacity: '4 person',
+    specification: '2 Queen Size Bed + Balcony + Living Room + Kitchen',
+    availability: true,
+    price: 1000000,
+    discount: 0.1,
+  },
+  {
+    char: 'F',
+    type: 'Presidental Suite',
+    capacity: '4 person',
+    specification: '2 King Size bed + Balcony + Living Room + Kitchen',
+    availability: true,
+    price: 1500000,
+    discount: 0.1,
+  },
 ];
 
 export class RoomInfo {
-    static async createRoomData() {
-        const char = document.getElementById('char');
-        const type = document.getElementById('type');
-        const capacity = document.getElementById('capacity');
-        const specification = document.getElementById('specification');
-        const price = document.getElementById('price');
-        const discount = document.getElementById('discount');
-        const image = document.getElementById('image')
+  static async createRoomData() {
+    const char = document.getElementById('char');
+    const type = document.getElementById('type');
+    const capacity = document.getElementById('capacity');
+    const specification = document.getElementById('specification');
+    const price = document.getElementById('price');
+    const discount = document.getElementById('discount');
+    const image = document.getElementById('image');
 
-        let payload = {
-            char: char.value,
-            type: type.value,
-            capacity: capacity.value,
-            specification: specification.value,
-            availability: 1,
-            price: price.value,
-            discount: discount.value,
-            image: image.files[0],
-        };
+    let payload = {
+      char: char.value,
+      type: type.value,
+      capacity: capacity.value,
+      specification: specification.value,
+      availability: 1,
+      price: price.value,
+      discount: discount.value,
+      image: image.files[0],
+    };
 
-        let formData = new FormData();
+    let formData = new FormData();
 
-        for (var key in payload) {
-            formData.append(key, payload[key]);
-        }
-
-
-        console.log('payload room line 79', formData.get('char'));
-        await RoomAPI.postRoom(formData);
-        this.generateRoomData();
+    for (var key in payload) {
+      formData.append(key, payload[key]);
     }
 
-    static async generateRoomData() {
-        const contentEl = document.getElementById('content');
-        const modalItem = document.getElementById('modal-field');
-        const modalButtonName = document.getElementById('modal-btn');
-        const modalTitle = document.getElementById('modal-title');
+    console.log('payload room line 79', formData.get('char'));
+    await RoomAPI.postRoom(formData);
+    this.generateRoomData();
+  }
 
-        contentEl.innerHTML = '';
-        modalButtonName.innerHTML = 'Add Room';
-        modalTitle.innerHTML = 'Add Room';
+  static async generateRoomData() {
+    const contentEl = document.getElementById('content');
+    const modalItem = document.getElementById('modal-field');
+    const modalButtonName = document.getElementById('modal-btn');
+    const modalTitle = document.getElementById('modal-title');
 
-        const roomdata = await RoomAPI.getRoom();
-        console.log(roomdata)
+    contentEl.innerHTML = '';
+    modalButtonName.innerHTML = 'Add Room';
+    modalTitle.innerHTML = 'Add Room';
 
-        if (roomdata) {
-            DATA = roomdata;
-        }
+    const roomdata = await RoomAPI.getRoom();
+    console.log(roomdata);
 
-        var currentDropdown;
+    if (roomdata) {
+      DATA = roomdata;
+    }
 
-        let content = '';
+    var currentDropdown;
 
-        DATA.forEach((res, idx) => {
-            let availability = 'Available';
-            if (res.availability == false) {
-                availability = 'Not Available';
-            }
+    let content = '';
 
-            let discount = '&nbsp';
-            let lineThrough = '';
-            if (res.discount > 0) {
-                discount = 'Rp ' + res.discount;
-                lineThrough = 'line-through';
-            }
+    DATA.forEach((res, idx) => {
+      let availability = 'Available';
+      if (res.availability == false) {
+        availability = 'Not Available';
+      }
 
-            let btnstatus = '';
-            if (res.availability == false) {
-                btnstatus = 'disabled';
-            }
-            const field = `
+      // let discount = '&nbsp';
+      let lineThrough = '';
+      if (res.discount > 0) {
+        // discount = 'Rp ' + res.discount;
+        lineThrough = 'line-through';
+      }
+
+      let btnstatus = '';
+      if (res.availability == false) {
+        btnstatus = 'disabled';
+      }
+      const field = `
             <div class="card" id="rooms-information">
                 <div class="title-content">
                     <div style="display: flex;">
@@ -160,8 +159,8 @@ export class RoomInfo {
                 </div>
                 <div class="card-content">
                     <div class="price-container">
-                        <p class="${lineThrough}">Rp${res.price}</p>
-                        <p class="discount">${discount}</p>
+                        <p class="${lineThrough}">Rp ${res.price}</p>
+                        <p class="discount">Rp ${(res.price * (1 - res.discount)).toFixed(2)}</p>
                     </div>
                     <div class="rooms-specification">
                         <p>${res.specification}</p>
@@ -173,19 +172,19 @@ export class RoomInfo {
                 </div>
             </div>
         `;
-            content += field;
-        });
-        const cards = `
+      content += field;
+    });
+    const cards = `
             <div class="grid-container">
                 ${content}
             </div>
         `;
 
-        contentEl.innerHTML += cards;
+    contentEl.innerHTML += cards;
 
-        let modal = '';
+    let modal = '';
 
-        modal = `
+    modal = `
             <div class="field">
               <p>ID Kamar</p>
               <div class="text_field z-depth-1">
@@ -230,55 +229,57 @@ export class RoomInfo {
             </div>
           `;
 
-        modalItem.innerHTML = modal;
+    modalItem.innerHTML = modal;
 
+    this.initModal();
+    document.addEventListener('click', (e) => {
+      console.log('click anything line 220', e);
+      if (e.target.classList.value == 'dot-button') {
+        currentDropdown = e.target.getAttribute('dropdown');
+        const dropdown = document.getElementById('dropdown-' + currentDropdown);
+        dropdown.style.display = 'block';
+      }
+      if (e.target.classList.value != 'dropdown' && e.target.classList.value != 'dot-button') {
+        const dropdown = document.getElementById('dropdown-' + currentDropdown);
+        dropdown.style.display = 'none';
+      }
+      if (e.target.id.includes('delete-')) {
+        console.log('deletin line 231', currentDropdown);
+        RoomAPI.deleteRoom({ id: currentDropdown });
+        this.generateRoomData();
+      }
+      if (e.target.id.includes('edit-')) {
         this.initModal();
-        document.addEventListener('click', (e) => {
-            console.log('click anything line 220', e);
-            if (e.target.classList.value == 'dot-button') {
-                currentDropdown = e.target.getAttribute('dropdown');
-                const dropdown = document.getElementById('dropdown-' + currentDropdown);
-                dropdown.style.display = 'block';
-            }
-            if (e.target.classList.value != 'dropdown' && e.target.classList.value != 'dot-button') {
-                const dropdown = document.getElementById('dropdown-' + currentDropdown);
-                dropdown.style.display = 'none';
-            }
-            if (e.target.id.includes('delete-')) {
-                console.log('deletin line 231', currentDropdown);
-                RoomAPI.deleteRoom({ id: currentDropdown });
-                this.generateRoomData();
-            }
-            if (e.target.id.includes('edit-')) {
-                this.initModal();
-                instance.open;
-            }
-        });
+        instance.open;
+      }
+    });
+  }
+
+  static initModal() {
+    if (document.readyState !== 'loading') {
+      console.log('App Ready >> Assigning modal event listener');
+    } else {
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('App not Ready >> Assigning DOM Content Loader Listener >> assigning modal event listeners');
+      });
     }
 
-    static initModal() {
-        if (document.readyState !== 'loading') {
-            console.log('App Ready >> Assigning modal event listener');
-        } else {
-            document.addEventListener('DOMContentLoaded', function () {
-                console.log('App not Ready >> Assigning DOM Content Loader Listener >> assigning modal event listeners');
-            });
-        }
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
 
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems);
+    document.getElementById('confirm-btn').replaceWith(document.getElementById('confirm-btn').cloneNode(true));
 
-        document.getElementById('modal-btn').addEventListener('click', function () {
-            console.log('test room line 250');
-            instances.open;
-        });
+    document.getElementById('modal-btn').addEventListener('click', function () {
+      console.log('test room line 250');
+      instances.open;
+    });
 
-        document.getElementById('confirm-btn').addEventListener('click', async function () {
-            RoomInfo.createRoomData();
-        });
-    }
+    document.getElementById('confirm-btn').addEventListener('click', async function () {
+      RoomInfo.createRoomData();
+    });
+  }
 
-    // static bookRoom() {
-    //   console.log('berhasil book');
-    // }
+  // static bookRoom() {
+  //   console.log('berhasil book');
+  // }
 }

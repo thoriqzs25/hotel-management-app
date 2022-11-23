@@ -27,12 +27,12 @@ export class FnBInfo {
         availability = 'Not Available';
       }
 
-      let discount = '&nbsp';
-      let lineThrough = '';
-      if (res.discount > 0) {
-        discount = 'Rp ' + res.discount;
-        lineThrough = 'line-through';
-      }
+      // let discount = '&nbsp';
+      // let lineThrough = '';
+      // if (res.discount > 0) {
+      //   // discount = 'Rp ' + res.discount;
+      //   lineThrough = 'line-through';
+      // }
 
       let btnstatus = '';
       if (res.availability == false) {
@@ -58,8 +58,8 @@ export class FnBInfo {
           </div>
           <div class="card-content">
             <div class="price-container">
-              <p class="${lineThrough}">Rp ${res.price}</p>
-              <p>${discount}</p>
+              <p class="${res.discount > 0 ? 'line-through' : ''} line-through">Rp ${res.price}</p>
+              <p>Rp ${(res.price * (1 - res.discount)).toFixed(2)}</p>
             </div>
           </div>
           <div class="card-bottom">
