@@ -1,6 +1,7 @@
 const DATA = [
     {
       title: 'Ayam Goreng',
+      foodType: 'Main Course',
       availability: true,
       price: 12000,
       discount: 0,
@@ -8,6 +9,7 @@ const DATA = [
     },
     {
       title: 'Rendang Sapi',
+      foodType: 'Main Course',
       availability: true,
       price: 12000,
       discount: 10000,
@@ -15,6 +17,7 @@ const DATA = [
     },
     {
       title: 'Nasi Goreng',
+      foodType: 'Main Course',
       availability: true,
       price: 20000,
       discount: 10000,
@@ -22,6 +25,7 @@ const DATA = [
     },
     {
       title: 'Magelangan Rendang',
+      foodType: 'Main Course',
       availability: false,
       price: 12000,
       discount: 0,
@@ -30,8 +34,9 @@ const DATA = [
     
   ];
 
-export function generateFnBInformation() {
-    const contentItem = document.getElementById('content');
+export class FnBInfo{
+    static generateFnBInformation() {
+        const contentItem = document.getElementById('content');
   
     let content = '';
     
@@ -56,7 +61,8 @@ export function generateFnBInformation() {
         const field = `
             <div class="card" id="fnb-information">
                 <div class="fnb-name">
-                    <p>${res.title}</p>
+                    <p class="name">${res.title}</p>
+                    <p class ="type">${res.foodType}</p>
                 </div>
                 <div class="card-image" id="fnb-image">
                     <img src="${res.image}">
@@ -79,9 +85,5 @@ export function generateFnBInformation() {
     let container = `<div class="grid-container">${content}</div>`
 
     contentItem.innerHTML = container;
+    }
 }
-
-
-{/* <div class="card-reveal">
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div> */}
