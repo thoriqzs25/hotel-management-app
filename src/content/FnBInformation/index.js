@@ -1,64 +1,63 @@
 const DATA = [
-    {
-      title: 'Ayam Goreng',
-      foodType: 'Main Course',
-      availability: true,
-      price: 12000,
-      discount: 0,
-      image: "../../public/images/1.jpg",
-    },
-    {
-      title: 'Rendang Sapi',
-      foodType: 'Main Course',
-      availability: true,
-      price: 12000,
-      discount: 10000,
-      image: "../../public/images/2.jpg",
-    },
-    {
-      title: 'Nasi Goreng',
-      foodType: 'Main Course',
-      availability: true,
-      price: 20000,
-      discount: 10000,
-      image: "../../public/images/3.jpg",
-    },
-    {
-      title: 'Magelangan Rendang',
-      foodType: 'Main Course',
-      availability: false,
-      price: 12000,
-      discount: 0,
-      image: "../../public/images/4.jpg",
-    },
-    
-  ];
+  {
+    title: 'Ayam Goreng',
+    foodType: 'Main Course',
+    availability: true,
+    price: 12000,
+    discount: 0,
+    image: '../../public/images/1.jpg',
+  },
+  {
+    title: 'Rendang Sapi',
+    foodType: 'Main Course',
+    availability: true,
+    price: 12000,
+    discount: 10000,
+    image: '../../public/images/2.jpg',
+  },
+  {
+    title: 'Nasi Goreng',
+    foodType: 'Main Course',
+    availability: true,
+    price: 20000,
+    discount: 10000,
+    image: '../../public/images/3.jpg',
+  },
+  {
+    title: 'Magelangan Rendang',
+    foodType: 'Main Course',
+    availability: false,
+    price: 12000,
+    discount: 0,
+    image: '../../public/images/4.jpg',
+  },
+];
 
-export class FnBInfo{
-    static generateFnBInformation() {
-        const contentItem = document.getElementById('content');
-  
+export class FnBInfo {
+  static generateFnBInformation() {
+    const contentItem = document.getElementById('content');
+
     let content = '';
-    
-    DATA.forEach((res,idx) => {
-        let availability = "Available"
-        if (res.availability == false) {
-            availability = "Not Available"
-        }
 
-        let discount = "&nbsp"
-        let lineThrough = ""
-        if (res.discount > 0) {
-            discount = "Rp " + res.discount
-            lineThrough = "line-through"
-        }
+    DATA.forEach((res, idx) => {
+      let availability = 'Available';
+      if (res.availability == false) {
+        availability = 'Not Available';
+      }
 
-        let btnstatus = ""
-        if (res.availability == false) {
-            btnstatus = "disabled"
-        } 
+      let discount = '&nbsp';
+      let lineThrough = '';
+      if (res.discount > 0) {
+        discount = 'Rp ' + res.discount;
+        lineThrough = 'line-through';
+      }
 
-        const field = `
+      let btnstatus = '';
+      if (res.availability == false) {
+        btnstatus = 'disabled';
+      }
+
+      const field = `
             <div class="card" id="fnb-information">
                 <div class="fnb-name">
                     <p class="name">${res.title}</p>
@@ -79,11 +78,9 @@ export class FnBInfo{
                 </div>
             </div>
         `;
-        content += field;
+      content += field;
     });
-
-    let container = `<div class="grid-container">${content}</div>`
-
+    let container = `<div class="grid-container">${content}</div>`;
     contentItem.innerHTML = container;
-    }
+  }
 }

@@ -12,20 +12,25 @@ let password = '';
 
 uname.addEventListener('keypress', (e) => {
   if (e.key == 'Enter') validate();
-
-  username = uname.value;
-  username += e.key;
+  else {
+    username = uname.value;
+    username += e.key;
+  }
 });
 
 pass.addEventListener('keypress', (e) => {
   if (e.key == 'Enter') validate();
-
-  password = pass.value;
-  password += e.key;
+  else {
+    password = pass.value;
+    password += e.key;
+  }
 });
 
 function validate() {
   if (username == 'thoriqzs' && password == 'abcvmnop') {
     window.nav.app('mainAppRedirect');
-  } else alert('Salah uname dan pass');
+  } else {
+    console.log(username, password, 'uname and pass');
+    alert('Salah uname dan pass');
+  }
 }
