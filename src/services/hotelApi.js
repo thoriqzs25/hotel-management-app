@@ -15,7 +15,6 @@ export class HotelAPI {
     try {
       return fetch('http://localhost:3000/hotel/info').then(async (response) => {
         let res = await response.json();
-        console.log('line 17 fetch data', res.data[0].IsEmpty);
         return res.data[0].IsEmpty;
       });
     } catch {
@@ -59,8 +58,6 @@ export class HotelAPI {
         Hotel_Bank_Account_Name: data.Hotel_Bank_Account_Name,
         Hotel_Bank_Number: data.Hotel_Bank_Number,
       };
-
-      // console.log('line 37', formData);
 
       return fetch('http://localhost:3000/hotel', {
         method: 'PUT',

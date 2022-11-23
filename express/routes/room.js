@@ -26,13 +26,12 @@ router.get('/', async function (req, res, next) {
   }
 });
 
-router.post('/', multer().single("image"), async function (req, res, next) {
+router.post('/', multer().single('image'), async function (req, res, next) {
   try {
-    fs.writeFile("./img/room/" + req.file.originalname, req.file.buffer, (err) => {
-      console.error(err)
-    })
-    const payload = { ...req.body, image: req.file.originalname }
-    console.log(payload)
+    fs.writeFile('./img/room/' + req.file.originalname, req.file.buffer, (err) => {
+      console.error(err);
+    });
+    const payload = { ...req.body, image: req.file.originalname };
     res.json(await room.createRoomInfo(payload));
   } catch (err) {
     console.error(`Error while create room information`, err.message);

@@ -30,7 +30,6 @@ function validate() {
   if (username == 'thoriqzs' && password == 'abcvmnop') {
     window.nav.app('mainAppRedirect');
   } else {
-    console.log(username, password, 'uname and pass');
     alert('Salah uname dan pass');
   }
 }

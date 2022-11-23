@@ -9,12 +9,12 @@ async function getFnbInfo() {
 }
 
 async function createFnbInfo(params) {
-  const { name, availability, price, discount } = params;
+  const { name, availability, price, discount, image } = params;
 
   let dbase = db.getDb();
 
   const create = dbase.prepare(
-    `INSERT INTO fnb (name, availability, price, discount ) VALUES (@name, @availability, @price, @discount)`
+    `INSERT INTO fnb (name, availability, price, discount, image) VALUES (@name, @availability, @price, @discount, @image)`
   );
 
   const createFnb = dbase.transaction((item) => {
@@ -26,6 +26,7 @@ async function createFnbInfo(params) {
     availability: availability,
     price: price,
     discount: discount,
+    image: image,
   });
 
   return {

@@ -1,0 +1,1 @@
+ALTER TABLE fnb ADD COLUMN image varchar(255)

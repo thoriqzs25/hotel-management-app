@@ -15,13 +15,13 @@ export class FnbAPI {
     try {
       return fetch('http://localhost:3000/fnb', {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: data,
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
       }).then((response) => response.json);
     } catch (e) {
-      alert('Error POST ROOM');
+      alert('Error POST FNB');
     }
   }
 

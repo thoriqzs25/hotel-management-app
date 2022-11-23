@@ -55,7 +55,6 @@ export class Nav {
 
   static setToClickable(id) {
     document.getElementById(`nav_${id}`).addEventListener('click', function () {
-      console.log('line 47', 'nav_' + id);
       Nav.activate(id);
     });
   }
@@ -79,10 +78,8 @@ export class Nav {
 
     if (id == 1) {
       Overview.generateOverview();
-      console.log('id 1 nav');
     } else if (id == 2) {
       RoomInfo.generateRoomData();
-      console.log('id 2 nav');
     } else if (id == 3) {
       FnBInfo.generateFnBInformation();
     } else if (id == 4) {
@@ -117,12 +114,9 @@ export class Nav {
     const leftIcon = document.getElementById('left-icon');
     const rightIcon = document.getElementById('right-icon');
 
-    leftIcon.addEventListener('click', function () {
-      console.log('left icon clicked line 110');
-    });
+    leftIcon.addEventListener('click', function () {});
 
     rightIcon.addEventListener('click', function () {
-      console.log('right icon clicked line 114');
       window.nav.app('authAppRedirect');
     });
   }

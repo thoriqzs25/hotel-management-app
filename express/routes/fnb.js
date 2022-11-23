@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const fnb = require('../services/fnbInfo.js');
+const multer = require('multer');
+const fs = require('fs');
 
 router.get('/', async function (req, res, next) {
   try {
@@ -11,9 +13,13 @@ router.get('/', async function (req, res, next) {
   }
 });
 
-router.post('/', async function (req, res, next) {
+router.post('/', multer().single('image'), async function (req, res, next) {
   try {
-    res.json(await fnb.createFnbInfo(req.body));
+    fs.writeFile('./img/fnb/' + req.file.originalname, req.file.buffer, (err) => {
+      console.error(err);
+    });
+    const payload = { ...req.body, image: req.file.originalname };
+    res.json(await fnb.createFnbInfo(payload));
   } catch (err) {
     console.error(`Error while create fnb information`, err.message);
     next(err);

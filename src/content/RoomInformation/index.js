@@ -85,7 +85,6 @@ export class RoomInfo {
       formData.append(key, payload[key]);
     }
 
-    console.log('payload room line 79', formData.get('char'));
     await RoomAPI.postRoom(formData);
     this.generateRoomData();
   }
@@ -101,7 +100,6 @@ export class RoomInfo {
     modalTitle.innerHTML = 'Add Room';
 
     const roomdata = await RoomAPI.getRoom();
-    console.log(roomdata);
 
     if (roomdata) {
       DATA = roomdata;
@@ -151,7 +149,6 @@ export class RoomInfo {
                     </div>
                 </div>
                 <div class="dropdown" id="dropdown-${res.char}">
-                    <div id="edit-${res.char}">Edit</div>
                     <div id="delete-${res.char}" style="color: red;">Delete</div>
                 </div>
                 <div class="card-image" id="rooms-image">
@@ -233,7 +230,6 @@ export class RoomInfo {
 
     this.initModal();
     document.addEventListener('click', (e) => {
-      console.log('click anything line 220', e);
       if (e.target.classList.value == 'dot-button') {
         currentDropdown = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
@@ -244,7 +240,6 @@ export class RoomInfo {
         dropdown.style.display = 'none';
       }
       if (e.target.id.includes('delete-')) {
-        console.log('deletin line 231', currentDropdown);
         RoomAPI.deleteRoom({ id: currentDropdown });
         this.generateRoomData();
       }
@@ -270,7 +265,6 @@ export class RoomInfo {
     document.getElementById('confirm-btn').replaceWith(document.getElementById('confirm-btn').cloneNode(true));
 
     document.getElementById('modal-btn').addEventListener('click', function () {
-      console.log('test room line 250');
       instances.open;
     });
 
@@ -278,8 +272,4 @@ export class RoomInfo {
       RoomInfo.createRoomData();
     });
   }
-
-  // static bookRoom() {
-  //   console.log('berhasil book');
-  // }
 }
