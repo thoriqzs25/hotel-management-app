@@ -63,12 +63,13 @@ export class Nav {
     this.deactivateAll();
     const nav = document.getElementById(`nav_${id}`);
     const contentItem = document.getElementById('content');
+    contentItem.classList.remove("grid-container")
     nav.classList.add('active');
     contentItem.innerHTML = '';
 
     if (id == 1) {
       Hotel.generateHotelInformation();
-    } else if (id == 2){
+    } else if (id == 2) {
       RoomInfo.generateRoomData();
       console.log('line72')
     } else if (id == 3) {
