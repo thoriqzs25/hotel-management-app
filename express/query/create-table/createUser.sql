@@ -1,5 +1,5 @@
 -- SQLite
-CREATE TABLE book(
+CREATE TABLE user(
 id integer PRIMARY KEY,
 nik integer,
 total_price integer,

@@ -1,7 +1,8 @@
 @import url("../../content/HotelInformation/hotelInformation.css"); /* Using a url */
-@import url("../nav/nav.css"); /* Using a url */
+@import url("../../nav/nav.css"); /* Using a url */
 @import url("../../content/FnBInformation/fnbInformation.css");
 @import url("../../content/RoomInformation/roomInformation.css");
+@import url("../../content/Overview/overview.css");
 
 
 
@@ -127,4 +128,12 @@ body p {
 
 .modal-footer {
   padding: 0px 40px !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
 }

@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var hotelRouter = require('./routes/hotel');
+// var bookRouter = require('./routes/book');
+var roomRouter = require('./routes/room');
+var fnbRouter = require('./routes/fnb');
 
 var app = express();
 
@@ -28,6 +31,9 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hotel', hotelRouter);
+// app.use('/book', bookRouter);
+app.use('/room', roomRouter);
+app.use('/fnb', fnbRouter);
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);

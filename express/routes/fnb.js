@@ -1,28 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const room = require('../services/roomInfo');
+const fnb = require('../services/fnbInfo.js');
 
 router.get('/', async function (req, res, next) {
   try {
-    res.json(await room.getRoomInfo());
+    res.json(await fnb.getFnbInfo());
   } catch (e) {
-    console.error(`Error while getting room information`, e.message);
+    console.error(`Error while getting fnb information`, e.message);
     next(e);
   }
 });
 
 router.post('/', async function (req, res, next) {
   try {
-    res.json(await room.createRoomInfo(req.body));
+    res.json(await fnb.createFnbInfo(req.body));
   } catch (err) {
-    console.error(`Error while create room information`, err.message);
+    console.error(`Error while create fnb information`, err.message);
     next(err);
   }
 });
 
 router.delete('/', async function (req, res, next) {
   try {
-    res.json(await room.deleteRoomInfo(req.body));
+    res.json(await room.deleteFnbInfo(req.body));
   } catch (e) {
     console.error(e);
     next(e);

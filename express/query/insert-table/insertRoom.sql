@@ -1,0 +1,1 @@
+INSERT INTO room (char, type, capacity, specification, availability, price, discount) VALUES ('A', 'Regular', '4 person', '2 Single Bed', true, 300000, 0.1)

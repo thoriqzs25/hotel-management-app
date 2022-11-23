@@ -1,5 +1,6 @@
 import { FnBInfo } from '../content/FnBInformation/index.js';
 import { Hotel } from '../content/HotelInformation/index.js';
+import { Overview } from '../content/Overview/index.js';
 import { RoomInfo } from '../content/RoomInformation/index.js';
 
 const DATA = [
@@ -63,25 +64,66 @@ export class Nav {
     this.deactivateAll();
     const nav = document.getElementById(`nav_${id}`);
     const contentItem = document.getElementById('content');
-    contentItem.classList.remove("grid-container")
+    const modalButton = document.getElementById('modal-btn');
+
+    // Reset all thing to default nav
+    contentItem.classList.remove('grid-container');
     nav.classList.add('active');
     contentItem.innerHTML = '';
+    modalButton.classList.remove('hidden');
+
+    // Remove all modal click listener
+    var old_element = document.getElementById('modal-btn');
+    var new_element = old_element.cloneNode(true);
+    old_element.parentNode.replaceChild(new_element, old_element);
 
     if (id == 1) {
-      Hotel.generateHotelInformation();
+      Overview.generateOverview();
+      console.log('id 1 nav');
     } else if (id == 2) {
       RoomInfo.generateRoomData();
-      console.log('line72')
+      console.log('id 2 nav');
     } else if (id == 3) {
       FnBInfo.generateFnBInformation();
     } else if (id == 4) {
-      window.nav.app('authAppRedirect');
+      Hotel.generateHotelInformation();
     }
   }
+
   static deactivateAll() {
     for (let i = 1; i <= numOfNav; i++) {
       const nav = document.getElementById(`nav_${i}`);
       nav.classList.remove('active');
     }
+  }
+
+  static generateHeader() {
+    let DATA = {
+      leftIcon: 'menu',
+      title: 'Update Hotel Information',
+      rightIcon: 'account_circle',
+    };
+
+    const contentDetail = document.getElementById('content-detail');
+
+    const detail = `
+    <i class="small material-icons clickable" id="left-icon">${DATA.leftIcon}</i>
+    <p>${DATA.title}</p>
+    <i class="small material-icons clickable" id="right-icon">${DATA.rightIcon}</i>
+    `;
+
+    contentDetail.innerHTML = detail;
+
+    const leftIcon = document.getElementById('left-icon');
+    const rightIcon = document.getElementById('right-icon');
+
+    leftIcon.addEventListener('click', function () {
+      console.log('left icon clicked line 110');
+    });
+
+    rightIcon.addEventListener('click', function () {
+      console.log('right icon clicked line 114');
+      window.nav.app('authAppRedirect');
+    });
   }
 }
