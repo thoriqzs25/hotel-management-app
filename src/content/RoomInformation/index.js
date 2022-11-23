@@ -122,7 +122,7 @@ export class RoomInfo {
             <div class="card" id="rooms-information">
                 <div class="title-content">
                     <div style="display: flex;">
-                        <div class="char-container">
+                        <div class="char-container" id="test-delete-button">
                             <p  class="charname">${res.char}</p>
                         </div>
                         <div class="title-container">
@@ -134,15 +134,15 @@ export class RoomInfo {
                             </div>
                         </div>
                     </div>
-                    <div class="dot-button" dropdown="${idx}">
+                    <div class="dot-button" dropdown="${res.char}">
                         <div class="dot">
 
                         </div>
                     </div>
                 </div>
-                <div class="dropdown" id="dropdown-${idx}">
-                    <div id="dropdown-content">Edit</div>
-                    <div id="dropdown-content" style="color: red;">Delete</div>
+                <div class="dropdown" id="dropdown-${res.char}">
+                    <div id="edit-${res.char}">Edit</div>
+                    <div id="delete-${res.char}" style="color: red;">Delete</div>
                 </div>
                 <div class="card-image" id="rooms-image">
                     <img src="${res.specification}">
@@ -226,6 +226,11 @@ export class RoomInfo {
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
         dropdown.style.display = 'none';
       }
+      if (e.target.id.includes('delete-')) {
+        console.log('deletin line 231', currentDropdown);
+        RoomAPI.deleteRoom({ id: currentDropdown });
+        this.generateRoomData();
+      }
     });
   }
 
@@ -242,8 +247,10 @@ export class RoomInfo {
     var instances = M.Modal.init(elems);
 
     document.getElementById('modal-btn').addEventListener('click', function () {
+      console.log('test room line 250');
       instances.open;
     });
+
     document.getElementById('confirm-btn').addEventListener('click', async function () {
       RoomInfo.createRoomData();
     });

@@ -1,0 +1,1 @@
+INSERT INTO fnb (name, availability, price, discount) VALUES ('Ayam Betutu', 1, 20000, 0.3)

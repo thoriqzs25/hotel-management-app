@@ -72,6 +72,11 @@ export class Nav {
     contentItem.innerHTML = '';
     modalButton.classList.remove('hidden');
 
+    // Remove all modal click listener
+    var old_element = document.getElementById('modal-btn');
+    var new_element = old_element.cloneNode(true);
+    old_element.parentNode.replaceChild(new_element, old_element);
+
     if (id == 1) {
       Overview.generateOverview();
       console.log('id 1 nav');

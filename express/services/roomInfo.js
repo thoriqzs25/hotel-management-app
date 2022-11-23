@@ -36,7 +36,24 @@ async function createRoomInfo(params) {
   };
 }
 
+async function deleteRoomInfo(params) {
+  const { id } = params;
+  let dbase = db.getDb();
+
+  const deleteReq = dbase.prepare(`DELETE FROM room WHERE char = '${id}'`);
+
+  const deleteRoom = dbase.transaction(() => {
+    deleteReq.run();
+  });
+
+  deleteRoom();
+  return {
+    deleteReq,
+  };
+}
+
 module.exports = {
   getRoomInfo,
   createRoomInfo,
+  deleteRoomInfo,
 };

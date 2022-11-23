@@ -89,6 +89,7 @@ export class Hotel {
     var instances = M.Modal.init(elems);
 
     document.getElementById('modal-btn').addEventListener('click', function () {
+      console.log('line 92');
       instances.open;
     });
 

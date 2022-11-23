@@ -1,7 +1,7 @@
-export class RoomAPI {
-  static async getRoom() {
+export class FnbAPI {
+  static async getFnb() {
     try {
-      return fetch('http://localhost:3000/room').then(async (response) => {
+      return fetch('http://localhost:3000/fnb').then(async (response) => {
         let res = await response.json();
         return res.data;
       });
@@ -11,9 +11,9 @@ export class RoomAPI {
     }
   }
 
-  static async postRoom(data) {
+  static async postFnb(data) {
     try {
-      return fetch('http://localhost:3000/room', {
+      return fetch('http://localhost:3000/fnb', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -25,9 +25,9 @@ export class RoomAPI {
     }
   }
 
-  static async deleteRoom(id) {
+  static async deleteFnb(id) {
     try {
-      return fetch('http://localhost:3000/room', {
+      return fetch('http://localhost:3000/fnb', {
         method: 'DELETE',
         body: JSON.stringify(id),
         headers: {
