@@ -1,7 +1,7 @@
 const db = require('./db');
 
 async function getRoomInfo() {
-  const data = db.query(`SELECT char, type, capacity, specification, availability, price, discount FROM room`, []);
+  const data = db.query(`SELECT char, type, capacity, specification, availability, price, discount, image FROM room`, []);
 
   return {
     data,
@@ -9,12 +9,12 @@ async function getRoomInfo() {
 }
 
 async function createRoomInfo(params) {
-  const { char, type, capacity, specification, availability, price, discount } = params;
+  const { char, type, capacity, specification, availability, price, discount, image } = params;
 
   let dbase = db.getDb();
 
   const create = dbase.prepare(
-    `INSERT INTO room (char, type, capacity,specification, availability, price, discount) VALUES (@char, @type, @capacity, @specification, @availability, @price, @discount)`
+    `INSERT INTO room (char, type, capacity,specification, availability, price, discount, image) VALUES (@char, @type, @capacity, @specification, @availability, @price, @discount, @image)`
   );
 
   const createRoom = dbase.transaction((item) => {
@@ -29,6 +29,7 @@ async function createRoomInfo(params) {
     availability: availability,
     price: price,
     discount: discount,
+    image: image,
   });
 
   return {
