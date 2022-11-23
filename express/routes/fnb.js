@@ -22,7 +22,7 @@ router.post('/', async function (req, res, next) {
 
 router.delete('/', async function (req, res, next) {
   try {
-    res.json(await room.deleteFnbInfo(req.body));
+    res.json(await fnb.deleteFnbInfo(req.body));
   } catch (e) {
     console.error(e);
     next(e);
