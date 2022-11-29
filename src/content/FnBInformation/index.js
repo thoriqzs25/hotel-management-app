@@ -71,7 +71,7 @@ export class FnBInfo {
       content += field;
     });
 
-    let container = `<div class="grid-container">${content}</div>`;
+    let container = `<div class="grid-container" id="fnb-content">${content}</div>`;
 
     let modal = '';
 
@@ -108,7 +108,10 @@ export class FnBInfo {
     this.initModal();
 
     let id;
-    document.addEventListener('click', (e) => {
+    let fnbContent = document.getElementById('fnb-content');
+
+    fnbContent.addEventListener('click', (e) => {
+      console.log('content line 112', e.target);
       if (e.target.classList.value == 'dot-button') {
         id = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + id);
@@ -119,6 +122,7 @@ export class FnBInfo {
         dropdown.style.display = 'none';
       }
       if (e.target.id.includes('delete-')) {
+        console.log('id', id);
         FnbAPI.deleteFnb({ id: id });
         this.generateFnBInformation();
       }

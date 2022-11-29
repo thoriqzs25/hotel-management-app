@@ -114,11 +114,8 @@ export class RoomInfo {
       if (res.availability == false) {
         availability = 'Not Available';
       }
-
-      // let discount = '&nbsp';
       let lineThrough = '';
       if (res.discount > 0) {
-        // discount = 'Rp ' + res.discount;
         lineThrough = 'line-through';
       }
 
@@ -172,12 +169,12 @@ export class RoomInfo {
       content += field;
     });
     const cards = `
-            <div class="grid-container">
+            <div class="grid-container" id="rooms-content">
                 ${content}
             </div>
         `;
 
-    contentEl.innerHTML += cards;
+    contentEl.innerHTML = cards;
 
     let modal = '';
 
@@ -229,7 +226,11 @@ export class RoomInfo {
     modalItem.innerHTML = modal;
 
     this.initModal();
-    document.addEventListener('click', (e) => {
+
+    let roomsContent = document.getElementById('rooms-content');
+
+    roomsContent.addEventListener('click', (e) => {
+      console.log('content line 230', e.target);
       if (e.target.classList.value == 'dot-button') {
         currentDropdown = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
@@ -240,12 +241,9 @@ export class RoomInfo {
         dropdown.style.display = 'none';
       }
       if (e.target.id.includes('delete-')) {
+        console.log('id', currentDropdown);
         RoomAPI.deleteRoom({ id: currentDropdown });
         this.generateRoomData();
-      }
-      if (e.target.id.includes('edit-')) {
-        this.initModal();
-        instance.open;
       }
     });
   }
