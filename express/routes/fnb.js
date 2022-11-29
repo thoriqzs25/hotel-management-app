@@ -13,6 +13,16 @@ router.get('/', async function (req, res, next) {
   }
 });
 
+router.get('/:id', async function (req, res, next) {
+  try {
+    const id = req.params.id;
+    res.json(await fnb.getFnbById(id));
+  } catch (e) {
+    console.log(`Error while getting fnb by Id`, e.message);
+    next(e);
+  }
+});
+
 router.post('/', multer().single('image'), async function (req, res, next) {
   try {
     fs.writeFile('./img/fnb/' + req.file.originalname, req.file.buffer, (err) => {

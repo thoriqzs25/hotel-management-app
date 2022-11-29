@@ -59,43 +59,13 @@ let DATA = [
 ];
 
 export class RoomInfo {
-  static async createRoomData() {
-    const char = document.getElementById('char');
-    const type = document.getElementById('type');
-    const capacity = document.getElementById('capacity');
-    const specification = document.getElementById('specification');
-    const price = document.getElementById('price');
-    const discount = document.getElementById('discount');
-    const image = document.getElementById('image');
-
-    let payload = {
-      char: char.value,
-      type: type.value,
-      capacity: capacity.value,
-      specification: specification.value,
-      availability: 1,
-      price: price.value,
-      discount: discount.value,
-      image: image.files[0],
-    };
-
-    let formData = new FormData();
-
-    for (var key in payload) {
-      formData.append(key, payload[key]);
-    }
-
-    await RoomAPI.postRoom(formData);
-    this.generateRoomData();
-  }
-
   static async generateRoomData() {
-    const contentEl = document.getElementById('content');
+    const contentItem = document.getElementById('content');
     const modalItem = document.getElementById('modal-field');
     const modalButtonName = document.getElementById('modal-btn');
     const modalTitle = document.getElementById('modal-title');
 
-    contentEl.innerHTML = '';
+    contentItem.innerHTML = '';
     modalButtonName.innerHTML = 'Add Room';
     modalTitle.innerHTML = 'Add Room';
 
@@ -124,57 +94,56 @@ export class RoomInfo {
         btnstatus = 'disabled';
       }
       const field = `
-            <div class="card" id="rooms-information">
-                <div class="title-content">
-                    <div style="display: flex;">
-                        <div class="char-container" id="test-delete-button">
-                            <p  class="charname">${res.char}</p>
-                        </div>
-                        <div class="title-container">
-                            <div class="rooms-name">
-                                <p>${res.type}</p>
-                            </div>
-                            <div class="rooms-capacity">
-                                <p>${res.capacity}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dot-button" dropdown="${res.char}">
-                        <div class="dot">
-
-                        </div>
-                    </div>
+        <div class="card" id="rooms-information">
+          <div class="title-content">
+            <div style="display: flex;">
+              <div class="char-container" id="test-delete-button">
+                <p  class="charname">${res.char}</p>
+              </div>
+              <div class="title-container">
+                <div class="rooms-name">
+                  <p>${res.type}</p>
                 </div>
-                <div class="dropdown" id="dropdown-${res.char}">
-                    <div id="delete-${res.char}" style="color: red;">Delete</div>
+                <div class="rooms-capacity">
+                  <p>${res.capacity}</p>
                 </div>
-                <div class="card-image" id="rooms-image">
-                    <img src="${ROOM_IMAGE_FOLDER + res.image}">
-                </div>
-                <div class="card-content">
-                    <div class="price-container">
-                        <p class="${lineThrough}">Rp ${res.price}</p>
-                        <p class="discount">Rp ${(res.price * (1 - res.discount)).toFixed(2)}</p>
-                    </div>
-                    <div class="rooms-specification">
-                        <p>${res.specification}</p>
-                    </div>
-                </div>
-                <div class="card-bottom">
-                        <p class="${availability}">${availability}</p>
-                        <a class="btn modal-trigger button purple normal-text ${btnstatus}" id="modal-btn" href="#modal1">Book</a>
-                </div>
+              </div>
             </div>
+            <div class="dot-button" dropdown="${res.char}">
+              <div class="dot">
+
+              </div>
+            </div>
+          </div>
+          <div class="dropdown" id="dropdown-${res.char}">
+            <div id="delete-${res.char}" style="color: red;">Delete</div>
+          </div>
+          <div class="card-image" id="rooms-image">
+            <img src="${ROOM_IMAGE_FOLDER + res.image}">
+          </div>
+          <div class="card-content">
+            <div class="price-container">
+              <p class="${lineThrough}">Rp ${res.price}</p>
+              <p class="discount">Rp ${(res.price * (1 - res.discount)).toFixed(2)}</p>
+            </div>
+            <div class="rooms-specification">
+              <p>${res.specification}</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <p class="${availability}">${availability}</p>
+            <a class="btn modal-trigger button purple normal-text ${btnstatus}" id="modal-btn" href="#modal1">Book</a>
+          </div>
+        </div>
         `;
       content += field;
     });
+
     const cards = `
             <div class="grid-container" id="rooms-content">
                 ${content}
             </div>
         `;
-
-    contentEl.innerHTML = cards;
 
     let modal = '';
 
@@ -224,13 +193,13 @@ export class RoomInfo {
           `;
 
     modalItem.innerHTML = modal;
+    contentItem.innerHTML = cards;
 
     this.initModal();
 
     let roomsContent = document.getElementById('rooms-content');
 
     roomsContent.addEventListener('click', (e) => {
-      console.log('content line 230', e.target);
       if (e.target.classList.value == 'dot-button') {
         currentDropdown = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
@@ -246,6 +215,36 @@ export class RoomInfo {
         this.generateRoomData();
       }
     });
+  }
+
+  static async createRoomData() {
+    const char = document.getElementById('char');
+    const type = document.getElementById('type');
+    const capacity = document.getElementById('capacity');
+    const specification = document.getElementById('specification');
+    const price = document.getElementById('price');
+    const discount = document.getElementById('discount');
+    const image = document.getElementById('image');
+
+    let payload = {
+      char: char.value,
+      type: type.value,
+      capacity: capacity.value,
+      specification: specification.value,
+      availability: 1,
+      price: price.value,
+      discount: discount.value,
+      image: image.files[0],
+    };
+
+    let formData = new FormData();
+
+    for (var key in payload) {
+      formData.append(key, payload[key]);
+    }
+
+    await RoomAPI.postRoom(formData);
+    this.generateRoomData();
   }
 
   static initModal() {

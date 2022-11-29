@@ -11,6 +11,17 @@ export class FnbAPI {
     }
   }
 
+  static async getById(id) {
+    try {
+      return fetch(`http://localhost:3000/fnb/${id}`).then(async (response) => {
+        let res = await response.json();
+        return res.data;
+      });
+    } catch {
+      return { message: 'Looks like there was a problem when fetching getById' };
+    }
+  }
+
   static async postFnb(data) {
     try {
       return fetch('http://localhost:3000/fnb', {

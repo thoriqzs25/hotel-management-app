@@ -8,6 +8,14 @@ async function getFnbInfo() {
   };
 }
 
+async function getFnbById(id) {
+  const data = db.query(`SELECT * FROM fnb WHERE id = ${id}`, []);
+
+  return {
+    data,
+  };
+}
+
 async function createFnbInfo(params) {
   const { name, availability, price, discount, image } = params;
 
@@ -52,6 +60,7 @@ async function deleteFnbInfo(params) {
 
 module.exports = {
   getFnbInfo,
+  getFnbById,
   createFnbInfo,
   deleteFnbInfo,
 };
