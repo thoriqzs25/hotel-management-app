@@ -8,6 +8,14 @@ async function getFnbInfo() {
   };
 }
 
+async function getFnbById(id) {
+  const data = db.query(`SELECT * FROM fnb WHERE id = ${id}`, []);
+
+  return {
+    data,
+  };
+}
+
 async function createFnbInfo(params) {
   const { name, availability, price, discount, image } = params;
 
@@ -50,8 +58,31 @@ async function deleteFnbInfo(params) {
   };
 }
 
+async function putFnbInfo(params) {
+  console.log('line 62 params', params);
+  let dbase = db.getDb();
+
+  const update = dbase.prepare(
+    `UPDATE fnb SET name = '${params.name}', price = ${params.price}, discount = ${params.discount}${
+      params.image !== 'no-changes' ? `, image = @image` : ''
+    } WHERE fnb.id = ${params.id}`
+  );
+
+  const updateFnb = dbase.transaction((data) => {
+    update.run(data);
+  });
+
+  updateFnb({ image: params.image });
+
+  return {
+    update,
+  };
+}
+
 module.exports = {
   getFnbInfo,
+  getFnbById,
   createFnbInfo,
   deleteFnbInfo,
+  putFnbInfo,
 };

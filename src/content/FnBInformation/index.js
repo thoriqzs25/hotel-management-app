@@ -28,13 +28,6 @@ export class FnBInfo {
         availability = 'Not Available';
       }
 
-      // let discount = '&nbsp';
-      // let lineThrough = '';
-      // if (res.discount > 0) {
-      //   // discount = 'Rp ' + res.discount;
-      //   lineThrough = 'line-through';
-      // }
-
       let btnstatus = '';
       if (res.availability == false) {
         btnstatus = 'disabled';
@@ -51,7 +44,8 @@ export class FnBInfo {
             </div>
           </div>
           <div class="dropdown" id="dropdown-${res.id}">
-            <div class="clickable" id="delete-${res.id}" style="color: red;">Delete</div>
+            <a class="clickable modal-trigger" id="edit-modal" style="padding-left: 12px" href="#modal1">Edit</a>
+            <div class="clickable" id="delete-${res.id}" style="color: red; padding-left: 12px">Delete</div>
           </div>
           <div class="card-image" id="fnb-image">
             <img src="${ROOM_IMAGE_FOLDER + res.image}">
@@ -64,14 +58,14 @@ export class FnBInfo {
           </div>
           <div class="card-bottom">
             <p class="${availability}">${availability}</p>
-            <a class="btn modal-trigger button purple normal-text ${btnstatus}" id="add-button" href="#">Add</a>
+            <a class="btn modal-trigger button purple normal-text ${btnstatus}" id="add-button" href="#modal1">Add</a>
           </div>
         </div>
         `;
       content += field;
     });
 
-    let container = `<div class="grid-container" id="fnb-content">${content}</div>`;
+    let cards = `<div class="grid-container" id="fnb-content">${content}</div>`;
 
     let modal = '';
 
@@ -102,16 +96,14 @@ export class FnBInfo {
       </div>
     `;
     modalItem.innerHTML = modal;
-
-    contentItem.innerHTML = container;
+    contentItem.innerHTML = cards;
 
     this.initModal();
 
     let id;
     let fnbContent = document.getElementById('fnb-content');
 
-    fnbContent.addEventListener('click', (e) => {
-      console.log('content line 112', e.target);
+    fnbContent.addEventListener('click', async (e) => {
       if (e.target.classList.value == 'dot-button') {
         id = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + id);
@@ -121,27 +113,33 @@ export class FnBInfo {
         const dropdown = document.getElementById('dropdown-' + id);
         dropdown.style.display = 'none';
       }
-      if (e.target.id.includes('delete-')) {
-        console.log('id', id);
+      if (e.target.id.includes('delete')) {
         FnbAPI.deleteFnb({ id: id });
         this.generateFnBInformation();
+      }
+      if (e.target.id.includes('edit-modal')) {
+        const fnbD = await FnbAPI.getById(id);
+        this.updateFnbData(fnbD);
       }
     });
   }
 
-  static async createFnbData() {
+  static async createFnbData(id) {
     const name = document.getElementById('name');
     const price = document.getElementById('price');
     const discount = document.getElementById('discount');
     const image = document.getElementById('image');
 
     let payload = {
-      name: name.value,
+      id: id ?? '',
+      name: name.value ?? '',
       availability: 1,
-      price: price.value,
-      discount: discount.value,
-      image: image.files[0],
+      price: price.value ?? 0,
+      discount: discount.value ?? 0,
+      image: image.files[0] ? image.files[0] : 'no-changes',
     };
+
+    console.log('payload line 146', payload);
 
     let formData = new FormData();
 
@@ -149,7 +147,10 @@ export class FnBInfo {
       formData.append(key, payload[key]);
     }
 
-    await FnbAPI.postFnb(formData);
+    console.log('will try line 154 id', payload.id);
+    if (payload.id) await FnbAPI.updateFnb(formData);
+    else FnbAPI.postFnb(formData);
+
     this.generateFnBInformation();
   }
 
@@ -162,17 +163,71 @@ export class FnBInfo {
       });
     }
 
-    document.getElementById('confirm-btn').replaceWith(document.getElementById('confirm-btn').cloneNode(true));
-
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
+
+    document.getElementById('confirm-btn').replaceWith(document.getElementById('confirm-btn').cloneNode(true));
 
     document.getElementById('modal-btn').addEventListener('click', function () {
       instances.open;
     });
 
-    document.getElementById('confirm-btn').addEventListener('click', async function () {
-      FnBInfo.createFnbData();
+    document.getElementById('edit-modal').addEventListener('click', function () {
+      instances.open;
     });
+
+    document.getElementById('confirm-btn').addEventListener('click', async function () {
+      const item = document.getElementById('name');
+      if (item) {
+        console.log('line 186 item', item);
+        const idx = item.getAttribute('dataindex');
+        FnBInfo.createFnbData(idx);
+      } else FnBInfo.createFnbData();
+    });
+  }
+
+  static updateFnbData(data) {
+    let item = data[0];
+    const modalItem = document.getElementById('modal-field');
+    const modalButtonName = document.getElementById('modal-btn');
+    const modalTitle = document.getElementById('modal-title');
+
+    modalButtonName.innerHTML = 'Edit FnB';
+    modalTitle.innerHTML = 'Edit FnB';
+    // modalItem.innerHTML = '';
+
+    let modal = `
+      <div class="field">
+        <p>Nama</p>
+        <div class="text_field z-depth-1">
+          <input dataindex=${item.id} id="name" placeholder="Ayam Betutulan" type="text" class="input_field" value="${
+      item.name ? item.name : ''
+    }">
+        </div>
+      </div>
+      <div class="field">
+        <p>Harga</p>
+        <div class="text_field z-depth-1">
+          <input id="price" placeholder="240000" type="text" class="input_field" value="${
+            item.price ? item.price : ''
+          }">
+        </div>
+      </div>
+      <div class="field">
+        <p>Diskon</p>
+        <div class="text_field z-depth-1">
+          <input id="discount" placeholder="0.44" type="text" class="input_field" value="${
+            item.discount ? item.discount : ''
+          }">
+        </div>
+      </div>
+      <div class="field">
+        <p>Gambar</p>
+        <div class="text_field z-depth-1">
+            <input id="image" type="file" class="input_field">
+        </div>
+      </div>
+    `;
+    modalItem.innerHTML = modal;
   }
 }
