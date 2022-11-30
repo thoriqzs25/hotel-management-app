@@ -4,24 +4,21 @@ const router = express.Router();
 const room = require('../services/roomInfo');
 const fs = require('fs');
 
-// const diskStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(__dirname, "/uploads"));
-//   },
-//   // konfigurasi penamaan file yang unik
-//   filename: function (req, file, cb) {
-//     cb(
-//       null,
-//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
 router.get('/', async function (req, res, next) {
   try {
     res.json(await room.getRoomInfo());
   } catch (e) {
     console.error(`Error while getting room information`, e.message);
+    next(e);
+  }
+});
+
+router.get('/:id', async function (req, res, next) {
+  try {
+    const id = req.params.id;
+    res.json(await room.getRoomById(id));
+  } catch (e) {
+    console.log(`Error while getting room by Id`, e.message);
     next(e);
   }
 });
@@ -45,6 +42,23 @@ router.delete('/', async function (req, res, next) {
   } catch (e) {
     console.error(e);
     next(e);
+  }
+});
+
+router.put('/', multer().single('image'), async function (req, res, next) {
+  let imageName = 'no-changes';
+  try {
+    if (req.file) {
+      fs.writeFile('./img/room/' + req.file.originalname, req.file.buffer, (err) => {
+        console.error(err);
+      });
+      imageName = req.file.originalname;
+    }
+    const payload = { ...req.body, image: imageName ?? 'no-changes' };
+    res.json(await room.putRoomInfo(payload));
+  } catch (err) {
+    console.error(`Error while editing room data`, err.message);
+    next(err);
   }
 });
 

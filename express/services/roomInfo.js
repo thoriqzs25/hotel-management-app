@@ -1,7 +1,15 @@
 const db = require('./db');
 
 async function getRoomInfo() {
-  const data = db.query(`SELECT char, type, capacity, specification, availability, price, discount, image FROM room`, []);
+  const data = db.query(`SELECT * FROM room`, []);
+
+  return {
+    data,
+  };
+}
+
+async function getRoomById(id) {
+  const data = db.query(`SELECT * FROM room WHERE id = '${id}'`, []);
 
   return {
     data,
@@ -53,8 +61,34 @@ async function deleteRoomInfo(params) {
   };
 }
 
+async function putRoomInfo(params) {
+  let dbase = db.getDb();
+
+  const update = dbase.prepare(
+    `UPDATE room SET char = '${params.char}', type = '${params.type}', capacity = '${
+      params.capacity
+    }', specification = '${params.specification}', availability = ${params.availability}, price = ${
+      params.price
+    }, discount = ${params.discount}${params.image !== 'no-changes' ? `, image = @image` : ''} WHERE room.id = ${
+      params.id
+    }`
+  );
+
+  const updateFnb = dbase.transaction((data) => {
+    update.run(data);
+  });
+
+  updateFnb({ image: params.image });
+
+  return {
+    update,
+  };
+}
+
 module.exports = {
   getRoomInfo,
+  getRoomById,
   createRoomInfo,
   deleteRoomInfo,
+  putRoomInfo,
 };
