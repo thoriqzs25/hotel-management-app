@@ -1,4 +1,4 @@
-import { HotelAPI } from './hotelApi.js';
+import { RoomAPI } from './roomApi.js';
 
 function hasJsonStructure(str) {
   if (typeof str !== 'string') return false;
@@ -11,9 +11,9 @@ function hasJsonStructure(str) {
   }
 }
 
-describe('GET /hotel', () => {
+describe('GET /room', () => {
   test('this should return JSON', async () => {
-    const result = await HotelAPI.getHotel();
+    const result = await RoomAPI.getRoom();
     expect(hasJsonStructure(JSON.stringify(result))).toBe(true);
   });
 });
