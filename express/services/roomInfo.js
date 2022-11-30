@@ -62,7 +62,6 @@ async function deleteRoomInfo(params) {
 }
 
 async function putRoomInfo(params) {
-  console.log('line 65 PARAMS TO UPDATE', params);
   let dbase = db.getDb();
 
   const update = dbase.prepare(

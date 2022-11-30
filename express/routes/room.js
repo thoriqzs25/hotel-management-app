@@ -46,17 +46,15 @@ router.delete('/', async function (req, res, next) {
 });
 
 router.put('/', multer().single('image'), async function (req, res, next) {
+  let imageName = 'no-changes';
   try {
-    let payload;
     if (req.file) {
       fs.writeFile('./img/room/' + req.file.originalname, req.file.buffer, (err) => {
         console.error(err);
-        payload = { ...req.body, image: req.file.originalname };
       });
-    } else {
-      payload = { ...req.body };
+      imageName = req.file.originalname;
     }
-    console.log('payload cok line 59', payload);
+    const payload = { ...req.body, image: imageName ?? 'no-changes' };
     res.json(await room.putRoomInfo(payload));
   } catch (err) {
     console.error(`Error while editing room data`, err.message);

@@ -25,7 +25,6 @@ router.get('/:id', async function (req, res, next) {
 
 router.post('/', multer().single('image'), async function (req, res, next) {
   try {
-    console.log('req body image line POST 28', req.body, req.file.originalname, req.file);
     fs.writeFile('./img/fnb/' + req.file.originalname, req.file.buffer, (err) => {
       console.error(err);
     });
@@ -47,15 +46,15 @@ router.delete('/', async function (req, res, next) {
 });
 
 router.put('/', multer().single('image'), async function (req, res, next) {
-  console.log('req ROOM body image line 50', req.body, req.file);
+  let imageName = 'no-changes';
   try {
-    let payload = { ...req.body };
-    console.log('req body image line 50', req.body, req.file.originalname, req.file);
-    if (req.body.image !== 'no-changes')
+    if (req.file) {
       fs.writeFile('./img/fnb/' + req.file.originalname, req.file.buffer, (err) => {
         console.error(err);
-        payload = { ...req.body, image: req.file.originalname };
       });
+      imageName = req.file.originalname;
+    }
+    const payload = { ...req.body, image: imageName };
     res.json(await fnb.putFnbInfo(payload));
   } catch (err) {
     console.error(`Error while editing fnb data`, err.message);

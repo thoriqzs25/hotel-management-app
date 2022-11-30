@@ -202,7 +202,6 @@ export class RoomInfo {
     roomsContent.addEventListener('click', async (e) => {
       if (e.target.classList.value == 'dot-button') {
         id = e.target.getAttribute('dropdown');
-        console.log('line 207 ID', id);
         const dropdown = document.getElementById('dropdown-' + id);
         dropdown.style.display = 'block';
       }
@@ -242,12 +241,9 @@ export class RoomInfo {
       image: image.files[0] ? image.files[0] : 'no-changes',
     };
 
-    console.log('PAYLOAD BEFORE BE line 245', payload);
-
     let formData = new FormData();
 
     for (var key in payload) {
-      console.log(key, '==>>', payload[key]);
       formData.append(key, payload[key]);
     }
 
@@ -280,7 +276,6 @@ export class RoomInfo {
 
     document.getElementById('confirm-btn').addEventListener('click', async function () {
       const item = document.getElementById('char');
-      console.log('line 280 ITEM', item);
       if (item) {
         const idx = item.getAttribute('dataindex');
         RoomInfo.createRoomData(idx);
@@ -289,7 +284,6 @@ export class RoomInfo {
   }
 
   static updateRoomData(data) {
-    console.log('line 228 DATA', data);
     let item = data[0];
     const modalItem = document.getElementById('modal-field');
     const modalButtonName = document.getElementById('modal-btn');
