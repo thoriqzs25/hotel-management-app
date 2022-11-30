@@ -36,6 +36,20 @@ export class FnbAPI {
     }
   }
 
+  static async updateFnb(data) {
+    try {
+      return fetch('http://localhost:3000/fnb', {
+        method: 'PUT',
+        body: data,
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+      }).then((response) => response.json);
+    } catch {
+      alert('Error PUT FNB');
+    }
+  }
+
   static async deleteFnb(id) {
     try {
       return fetch('http://localhost:3000/fnb', {
@@ -45,6 +59,17 @@ export class FnbAPI {
           'Content-Type': 'application/json',
         },
       }).then((response) => response.json);
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  static async checkEmpty(id) {
+    try {
+      return fetch(`http://localhost:3000/fnb/${id}`).then(async (response) => {
+        let res = await response.json();
+        return res.data.IsEmpty;
+      });
     } catch (e) {
       alert(e);
     }
