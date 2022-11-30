@@ -116,7 +116,8 @@ export class RoomInfo {
             </div>
           </div>
           <div class="dropdown" id="dropdown-${res.char}">
-            <div id="delete-${res.char}" style="color: red;">Delete</div>
+            <a class="clickable modal-trigger" id="edit-modal" style="padding-left: 12px" href="#modal1">Edit</a>
+            <div class="clickable" id="delete-${res.id}" style="color: red; padding-left: 12px">Delete</div>
           </div>
           <div class="card-image" id="rooms-image">
             <img src="${ROOM_IMAGE_FOLDER + res.image}">
@@ -197,11 +198,12 @@ export class RoomInfo {
 
     this.initModal();
 
+    let id;
     let roomsContent = document.getElementById('rooms-content');
 
-    roomsContent.addEventListener('click', (e) => {
+    roomsContent.addEventListener('click', async (e) => {
       if (e.target.classList.value == 'dot-button') {
-        currentDropdown = e.target.getAttribute('dropdown');
+        id = e.target.getAttribute('dropdown');
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
         dropdown.style.display = 'block';
       }
@@ -209,15 +211,18 @@ export class RoomInfo {
         const dropdown = document.getElementById('dropdown-' + currentDropdown);
         dropdown.style.display = 'none';
       }
-      if (e.target.id.includes('delete-')) {
-        console.log('id', currentDropdown);
-        RoomAPI.deleteRoom({ id: currentDropdown });
+      if (e.target.id.includes('delete')) {
+        RoomAPI.deleteRoom({ id: id });
         this.generateRoomData();
+      }
+      if (e.target.id.includes('edit-modal')) {
+        const fnbD = await RoomAPI.getById(id);
+        this.updateFnbData(fnbD);
       }
     });
   }
 
-  static async createRoomData() {
+  static async createRoomData(id) {
     const char = document.getElementById('char');
     const type = document.getElementById('type');
     const capacity = document.getElementById('capacity');
@@ -227,14 +232,14 @@ export class RoomInfo {
     const image = document.getElementById('image');
 
     let payload = {
-      char: char.value,
-      type: type.value,
-      capacity: capacity.value,
-      specification: specification.value,
+      id: char.value ?? '',
+      type: type.value ?? '',
+      capacity: capacity.value ?? '',
+      specification: specification.value ?? '',
       availability: 1,
-      price: price.value,
-      discount: discount.value,
-      image: image.files[0],
+      price: price.value ?? 0,
+      discount: discount.value ?? 0,
+      image: image.files[0] ? image.files[0] : 'no-changes',
     };
 
     let formData = new FormData();
@@ -243,7 +248,8 @@ export class RoomInfo {
       formData.append(key, payload[key]);
     }
 
-    await RoomAPI.postRoom(formData);
+    if (payload.id) await RoomAPI.updateRoom(formData);
+    else RoomAPI.postRoom(formData);
     this.generateRoomData();
   }
 
@@ -265,8 +271,87 @@ export class RoomInfo {
       instances.open;
     });
 
-    document.getElementById('confirm-btn').addEventListener('click', async function () {
-      RoomInfo.createRoomData();
+    document.getElementById('edit-modal').addEventListener('click', function () {
+      instances.open;
     });
+
+    document.getElementById('confirm-btn').addEventListener('click', async function () {
+      const item = document.getElementById('name');
+      if (item) {
+        const idx = item.getAttribute('dataindex');
+        RoomInfo.createRoomData(idx);
+      } else RoomInfo.createRoomData();
+    });
+  }
+
+  static updateRoomData(data) {
+    let item = data[0];
+    const modalItem = document.getElementById('modal-field');
+    const modalButtonName = document.getElementById('modal-btn');
+    const modalTitle = document.getElementById('modal-title');
+
+    modalButtonName.innerHTML = 'Edit Room';
+    modalTitle.innerHTML = 'Edit Room';
+
+    let modal = `
+            <div class="field">
+              <p>ID Kamar</p>
+              <div class="text_field z-depth-1">
+                <input dataindex=${
+                  item.id
+                } id="char" placeholder="A/B/C/D/AA/AZ" type="text" class="input_field" value="${
+      item.char ? item.char : ''
+    }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Tipe</p>
+              <div class="text_field z-depth-1">
+                <input id="type" placeholder="Single/Duluxe" type="text" class="input_field" value="${
+                  item.type ? item.type : ''
+                }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Kapasitas</p>
+              <div class="text_field z-depth-1">
+                <input id="capacity" placeholder="4 Orang" type="text" class="input_field" value="${
+                  item.capacity ? item.capacity : ''
+                }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Spesifikasi</p>
+              <div class="text_field z-depth-1">
+                <input id="specification" placeholder="Twin Bed" type="text" class="input_field" value="${
+                  item.specification ? item.specification : ''
+                }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Harga</p>
+              <div class="text_field z-depth-1">
+                <input id="price" placeholder="405000" type="text" class="input_field" value="${
+                  item.price ? item.price : ''
+                }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Diskon</p>
+              <div class="text_field z-depth-1">
+                <input id="discount" placeholder="0.5" type="text" class="input_field" value="${
+                  item.discount ? item.discount : ''
+                }">
+              </div>
+            </div>
+            <div class="field">
+              <p>Gambar</p>
+              <div class="text_field z-depth-1">
+                  <input id="image" type="file" class="input_field" >
+              </div>
+            </div>
+          `;
+
+    modalItem.innerHTML = modal;
   }
 }

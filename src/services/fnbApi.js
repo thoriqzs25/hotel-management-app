@@ -63,15 +63,4 @@ export class FnbAPI {
       alert(e);
     }
   }
-
-  static async checkEmpty(id) {
-    try {
-      return fetch(`http://localhost:3000/fnb/${id}`).then(async (response) => {
-        let res = await response.json();
-        return res.data.IsEmpty;
-      });
-    } catch (e) {
-      alert(e);
-    }
-  }
 }
