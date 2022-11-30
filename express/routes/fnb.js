@@ -47,13 +47,15 @@ router.delete('/', async function (req, res, next) {
 });
 
 router.put('/', multer().single('image'), async function (req, res, next) {
+  console.log('req ROOM body image line 50', req.body, req.file);
   try {
+    let payload = { ...req.body };
     console.log('req body image line 50', req.body, req.file.originalname, req.file);
     if (req.body.image !== 'no-changes')
       fs.writeFile('./img/fnb/' + req.file.originalname, req.file.buffer, (err) => {
         console.error(err);
+        payload = { ...req.body, image: req.file.originalname };
       });
-    const payload = { ...req.body, image: req.file.originalname };
     res.json(await fnb.putFnbInfo(payload));
   } catch (err) {
     console.error(`Error while editing fnb data`, err.message);

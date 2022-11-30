@@ -16,9 +16,9 @@ router.get('/', async function (req, res, next) {
 router.get('/:id', async function (req, res, next) {
   try {
     const id = req.params.id;
-    res.json(await room.getFnbById(id));
+    res.json(await room.getRoomById(id));
   } catch (e) {
-    console.log(`Error while getting fnb by Id`, e.message);
+    console.log(`Error while getting room by Id`, e.message);
     next(e);
   }
 });
@@ -47,12 +47,17 @@ router.delete('/', async function (req, res, next) {
 
 router.put('/', multer().single('image'), async function (req, res, next) {
   try {
-    if (req.body.image !== 'no-changes')
+    let payload;
+    if (req.file) {
       fs.writeFile('./img/room/' + req.file.originalname, req.file.buffer, (err) => {
         console.error(err);
+        payload = { ...req.body, image: req.file.originalname };
       });
-    const payload = { ...req.body, image: req.file.originalname };
-    res.json(await room.putFnbInfo(payload));
+    } else {
+      payload = { ...req.body };
+    }
+    console.log('payload cok line 59', payload);
+    res.json(await room.putRoomInfo(payload));
   } catch (err) {
     console.error(`Error while editing room data`, err.message);
     next(err);

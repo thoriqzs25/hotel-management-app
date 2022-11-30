@@ -139,15 +139,12 @@ export class FnBInfo {
       image: image.files[0] ? image.files[0] : 'no-changes',
     };
 
-    console.log('payload line 146', payload);
-
     let formData = new FormData();
 
     for (var key in payload) {
       formData.append(key, payload[key]);
     }
 
-    console.log('will try line 154 id', payload.id);
     if (payload.id) await FnbAPI.updateFnb(formData);
     else FnbAPI.postFnb(formData);
 
@@ -179,7 +176,6 @@ export class FnBInfo {
     document.getElementById('confirm-btn').addEventListener('click', async function () {
       const item = document.getElementById('name');
       if (item) {
-        console.log('line 186 item', item);
         const idx = item.getAttribute('dataindex');
         FnBInfo.createFnbData(idx);
       } else FnBInfo.createFnbData();

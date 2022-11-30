@@ -75,8 +75,6 @@ export class RoomInfo {
       DATA = roomdata;
     }
 
-    var currentDropdown;
-
     let content = '';
 
     DATA.forEach((res, idx) => {
@@ -109,13 +107,13 @@ export class RoomInfo {
                 </div>
               </div>
             </div>
-            <div class="dot-button" dropdown="${res.char}">
+            <div class="dot-button" dropdown="${res.id}">
               <div class="dot">
 
               </div>
             </div>
           </div>
-          <div class="dropdown" id="dropdown-${res.char}">
+          <div class="dropdown" id="dropdown-${res.id}">
             <a class="clickable modal-trigger" id="edit-modal" style="padding-left: 12px" href="#modal1">Edit</a>
             <div class="clickable" id="delete-${res.id}" style="color: red; padding-left: 12px">Delete</div>
           </div>
@@ -204,11 +202,12 @@ export class RoomInfo {
     roomsContent.addEventListener('click', async (e) => {
       if (e.target.classList.value == 'dot-button') {
         id = e.target.getAttribute('dropdown');
-        const dropdown = document.getElementById('dropdown-' + currentDropdown);
+        console.log('line 207 ID', id);
+        const dropdown = document.getElementById('dropdown-' + id);
         dropdown.style.display = 'block';
       }
       if (e.target.classList.value != 'dropdown' && e.target.classList.value != 'dot-button') {
-        const dropdown = document.getElementById('dropdown-' + currentDropdown);
+        const dropdown = document.getElementById('dropdown-' + id);
         dropdown.style.display = 'none';
       }
       if (e.target.id.includes('delete')) {
@@ -216,8 +215,8 @@ export class RoomInfo {
         this.generateRoomData();
       }
       if (e.target.id.includes('edit-modal')) {
-        const fnbD = await RoomAPI.getById(id);
-        this.updateFnbData(fnbD);
+        const roomD = await RoomAPI.getById(id);
+        this.updateRoomData(roomD);
       }
     });
   }
@@ -232,7 +231,8 @@ export class RoomInfo {
     const image = document.getElementById('image');
 
     let payload = {
-      id: char.value ?? '',
+      id: id ?? '',
+      char: char.value ?? '',
       type: type.value ?? '',
       capacity: capacity.value ?? '',
       specification: specification.value ?? '',
@@ -242,9 +242,12 @@ export class RoomInfo {
       image: image.files[0] ? image.files[0] : 'no-changes',
     };
 
+    console.log('PAYLOAD BEFORE BE line 245', payload);
+
     let formData = new FormData();
 
     for (var key in payload) {
+      console.log(key, '==>>', payload[key]);
       formData.append(key, payload[key]);
     }
 
@@ -276,7 +279,8 @@ export class RoomInfo {
     });
 
     document.getElementById('confirm-btn').addEventListener('click', async function () {
-      const item = document.getElementById('name');
+      const item = document.getElementById('char');
+      console.log('line 280 ITEM', item);
       if (item) {
         const idx = item.getAttribute('dataindex');
         RoomInfo.createRoomData(idx);
@@ -285,6 +289,7 @@ export class RoomInfo {
   }
 
   static updateRoomData(data) {
+    console.log('line 228 DATA', data);
     let item = data[0];
     const modalItem = document.getElementById('modal-field');
     const modalButtonName = document.getElementById('modal-btn');

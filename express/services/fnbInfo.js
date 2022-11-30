@@ -59,7 +59,6 @@ async function deleteFnbInfo(params) {
 }
 
 async function putFnbInfo(params) {
-  console.log('line 62 params', params);
   let dbase = db.getDb();
 
   const update = dbase.prepare(

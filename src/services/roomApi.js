@@ -36,7 +36,7 @@ export class RoomAPI {
     }
   }
 
-  static async updateFnb(data) {
+  static async updateRoom(data) {
     try {
       return fetch('http://localhost:3000/room', {
         method: 'PUT',
